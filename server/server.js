@@ -32,6 +32,42 @@ mongoose.connect(process.env.MONGO_URI)
 //define model
 var Lip_reading= require('./models/lip_reading');
 
+
+//데이터 읽기
+/*var XLSX= require('xlsx');
+
+var workbook = XLSX.readFile('lip_reading.xlsx');
+let worksheet = workbook.Sheets['Sheet1'];
+
+var cell_idx=['A','B','C','D','E','F']
+
+console.log(worksheet[cell_idx[0]+1].v);
+
+
+for(i=2; i<22; i++){
+ 
+    var newData = new Lip_reading(
+        {
+            id: worksheet[cell_idx[0]+i].v,
+            link: worksheet[cell_idx[1]+i].v,
+            start: worksheet[cell_idx[2]+i].v,
+            end: worksheet[cell_idx[3]+i].v,
+            answer: worksheet[cell_idx[4]+i].v,
+            type: worksheet[cell_idx[5]+i].v
+        }
+    )
+
+     newData.save(function(error, data){
+        if(error){
+            console.log(error);
+        }else{
+            console.log('Saved!')
+        }
+    });   
+
+}
+*/
+
 //독화훈련 데이터 get
 app.get('/api/lip_reading',(req,res)=>{
 
