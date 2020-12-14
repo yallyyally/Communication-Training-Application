@@ -15,6 +15,7 @@
         android:weightSum="10">
 
         <ImageView
+            android:id="@+id/iv_home"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_baseline_home_24"
@@ -75,7 +76,8 @@
                 android:padding="5dp"
                 android:layout_weight="8.5"
                 android:background="#ccffffff"
-                android:hint="찾고 싶은 단어 입력하세요"/>
+                android:hint="찾고 싶은 단어 입력하세요"
+                android:singleLine="true"/>
 
             <ImageButton
                 android:layout_width="0dp"
