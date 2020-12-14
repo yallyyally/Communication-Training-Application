@@ -40,6 +40,15 @@
         android:gravity="center">
 
         <Button
+            android:id="@+id/btn_rand"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="랜덤"
+            android:textSize="20sp"
+            android:layout_margin="10dp"/>
+
+        <Button
+            android:id="@+id/btn_word"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="단어"
@@ -47,16 +56,10 @@
             android:layout_margin="10dp"/>
 
         <Button
+            android:id="@+id/btn_sent"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="문장"
-            android:textSize="20sp"
-            android:layout_margin="10dp"/>
-
-        <Button
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:text="랜덤"
             android:textSize="20sp"
             android:layout_margin="10dp"/>
 
