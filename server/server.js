@@ -34,7 +34,7 @@ var Lip_reading= require('./models/lip_reading');
 
 
 //데이터 읽기
-/*var XLSX= require('xlsx');
+var XLSX= require('xlsx');
 
 var workbook = XLSX.readFile('lip_reading.xlsx');
 let worksheet = workbook.Sheets['Sheet1'];
@@ -66,7 +66,7 @@ for(i=2; i<22; i++){
     });   
 
 }
-*/
+
 
 //독화훈련 데이터 get
 app.get('/api/lip_reading',(req,res)=>{
