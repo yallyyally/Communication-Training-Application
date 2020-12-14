@@ -82,8 +82,9 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1.5"
-                android:background="null"
+                android:background="@color/lightgray"
                 android:src="@drawable/ic_baseline_search_24"/>
+            <!--android:background="null" 이였는데 에러나서 잠시 lightgray로 처리,,-->
 
 
         </LinearLayout>
