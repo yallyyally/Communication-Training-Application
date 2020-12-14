@@ -20,11 +20,18 @@ import javax.net.ssl.X509TrustManager;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         //Security.insertProviderAt(Conscrypt.newProvider(), 1);
         setContentView(R.layout.activity_main);
@@ -34,6 +41,23 @@ public class MainActivity extends AppCompatActivity {
         trustAllHosts();
         RetrofitClient.request(cbLipReading,"call_lip_reading", resultMap);
 
+        Button btnLip = (Button) findViewById(R.id.btn_lip);
+        btnLip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), LipReadingActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Button btnDic = (Button) findViewById(R.id.btn_dic);
+        btnDic.setOnClickListener(new Button.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),DictionaryActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 

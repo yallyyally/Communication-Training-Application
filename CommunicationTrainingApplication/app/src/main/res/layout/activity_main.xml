@@ -22,7 +22,8 @@
         android:layout_marginTop="20dp"
         android:weightSum="2">
 
-        <TextView
+        <Button
+            android:id="@+id/btn_lip"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="독화 훈련"
@@ -31,7 +32,8 @@
             android:layout_weight="1"
 
             />
-        <TextView
+        <Button
+            android:id="@+id/btn_dic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="의성/의태어 사전"

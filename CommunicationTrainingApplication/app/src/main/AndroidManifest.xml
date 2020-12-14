@@ -15,6 +15,8 @@
         android:theme="@style/AppTheme">
         <activity android:name=".UiseongQuizActivity">
         </activity>
+        <activity android:name=".LipReadingActivity"></activity>
+        <activity android:name=".DictionaryActivity"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
