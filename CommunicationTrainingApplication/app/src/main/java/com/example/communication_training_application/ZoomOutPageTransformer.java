@@ -2,7 +2,6 @@ package com.example.communication_training_application;
 
 import android.view.View;
 
-import androidx.annotation.NonNull;
 import androidx.viewpager2.widget.ViewPager2;
 
 public class ZoomOutPageTransformer implements ViewPager2.PageTransformer {
