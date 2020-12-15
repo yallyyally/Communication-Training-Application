@@ -32,10 +32,41 @@ mongoose.connect(process.env.MONGO_URI)
 //define model
 var Lip_reading= require('./models/lip_reading');
 
+var Uiseong=require('./models/uiseong');
 
-//데이터 읽기
+//var fs= require('fs');
+
+/*
+//데이터 읽기(lip_reading)
 var XLSX= require('xlsx');
+var workbook = XLSX.readFile('uiseong1.xlsx');
+let worksheet = workbook.Sheets['Sheet1'];
 
+var cell_idx=['A','B','C','D','E','F']
+
+//의성 의태
+for(i=2; i<22; i++){
+ 
+    var newData = new Uiseong(
+        {
+            id: worksheet[cell_idx[0]+i].v,
+            link: worksheet[cell_idx[1]+i].v,
+            answer: worksheet[cell_idx[2]+i].v,
+            desc: worksheet[cell_idx[3]+i].v,
+        }
+    )
+
+     newData.save(function(error, data){
+        if(error){
+            console.log(error);
+        }else{
+            console.log('Saved!')
+        }
+    });   
+
+}
+*/
+/*
 var workbook = XLSX.readFile('lip_reading.xlsx');
 let worksheet = workbook.Sheets['Sheet1'];
 
@@ -66,6 +97,8 @@ for(i=2; i<22; i++){
     });   
 
 }
+*/
+
 
 
 //독화훈련 데이터 get
@@ -80,3 +113,14 @@ app.get('/api/lip_reading',(req,res)=>{
 
 })
 
+app.get('/api/uiseong',(req,res)=>{
+
+    Uiseong.find({},['id'], function(err,uiseongs){
+        if(err) return res.status(500).json({error:err});
+        if(!uiseongs) console.log("aaa");
+        console.log(uiseongs);
+        res.json(uiseongs);
+    })
+
+
+})
