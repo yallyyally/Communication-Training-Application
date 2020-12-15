@@ -6,11 +6,13 @@ public class Uiseong implements Serializable {
     private String word;
     private String meaning;
     private String ex;
+    private String url;
 
-    public Uiseong(String word, String meaning, String ex){
+    public Uiseong(String word, String meaning, String ex, String url){
         this.word = word;
         this.meaning = meaning;
         this.ex = ex;
+        this.url = url;
     }
 
     public String getWord(){
@@ -35,5 +37,13 @@ public class Uiseong implements Serializable {
 
     public void setEx(String ex){
         this.ex = ex;
+    }
+
+    public String getUrl(){
+        return url;
+    }
+
+    public void setUrl(String url){
+        this.url = url;
     }
 }

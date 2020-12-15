@@ -58,11 +58,12 @@ public class ViewPagerAdapter extends PagerAdapter {
             TextView tvEx = (TextView) view.findViewById(R.id.tv_ex_1);
             tvEx.setText(str2);
 
+            String str3 = ulist.get(position).getUrl();
             ImageView ivSample = (ImageView) view.findViewById(R.id.iv_sample);
 
             Glide.with(mContext)
                     .asGif()
-                    .load("https://media.giphy.com/media/l3V0lsGtTMSB5YNgc/giphy.gif")
+                    .load(str3)
                     //.override(200, 100)
                     .error(R.drawable.ic_outline_sentiment_dissatisfied_24)
                     .into(ivSample);
