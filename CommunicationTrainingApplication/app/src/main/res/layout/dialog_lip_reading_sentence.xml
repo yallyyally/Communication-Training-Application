@@ -15,4 +15,138 @@
 
 
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="15"
+        android:orientation="vertical"
+        android:background="@android:color/white"
+        android:weightSum="13"
+        >
+
+        <Button
+            android:id="@+id/Button_WatchAnswer"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:minHeight="0dp"
+            android:text="정답보기"
+            android:layout_weight="1"/>
+
+
+            <!-- 이후 유튜브 플레이어 뷰로 고치기 !-->
+        <com.google.android.youtube.player.YouTubePlayerView
+            android:id="@+id/YoutubeView_youtubeplayer"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="6" />
+
+        <LinearLayout
+            android:id="@+id/Linearlayout_A"
+            android:clickable="true"
+            android:onClick="clickHandler"
+
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.5"
+            android:orientation="horizontal"
+            android:weightSum="10">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="a"
+                android:background="@android:color/transparent"/>
+
+            <TextView
+                android:id="@+id/TextView_A"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="9"
+                android:text="hello,"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/Linearlayout_B"
+            android:clickable="true"
+            android:onClick="clickHandler"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.5"
+            android:orientation="horizontal"
+            android:weightSum="10">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="b"
+                android:background="@android:color/transparent"/>
+
+            <TextView
+                android:id="@+id/TextView_B"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="9"
+                android:text="hello,"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/Linearlayout_C"
+            android:clickable="true"
+            android:layout_width="match_parent"
+            android:onClick="clickHandler"
+
+            android:layout_height="0dp"
+            android:layout_weight="1.5"
+            android:orientation="horizontal"
+            android:weightSum="10">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="c"
+                android:background="@android:color/transparent"/>
+
+            <TextView
+                android:id="@+id/TextView_C"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="9"
+                android:text="hello,"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:clickable="true"
+            android:id="@+id/Linearlayout_D"
+            android:layout_width="match_parent"
+            android:onClick="clickHandler"
+
+            android:layout_height="0dp"
+            android:layout_weight="1.5"
+            android:orientation="horizontal"
+
+            android:weightSum="10">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="d"
+                android:background="@android:color/transparent"/>
+
+            <TextView
+                android:id="@+id/TextView_D"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="9"
+                android:text="hello,"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
 </LinearLayout>
