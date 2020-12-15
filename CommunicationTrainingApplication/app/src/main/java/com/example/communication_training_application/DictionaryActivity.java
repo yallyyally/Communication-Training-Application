@@ -102,7 +102,7 @@ public class DictionaryActivity extends AppCompatActivity {
         public void onResponse(Call<List<UiseongUitaeData>> call, Response<List<UiseongUitaeData>> response) {
             if (response.isSuccessful()) {
                 uiseongList = response.body();
-                Log.d(TAG, "의성이"+ uiseongList.get(0));
+                Log.d(TAG, "의성이"+ uiseongList.get(0).getAnswer());
 
 
 
