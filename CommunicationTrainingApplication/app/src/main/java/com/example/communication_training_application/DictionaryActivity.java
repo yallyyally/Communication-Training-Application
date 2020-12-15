@@ -52,14 +52,12 @@ public class DictionaryActivity extends AppCompatActivity {
         HashMap<String, String> resultMap = new HashMap();
 
         trustAllHosts();
-        RetrofitClient.request(cbUiseongUiTae,"call_uiseongs", resultMap);
+
+        if(uiseongList.isEmpty()){
+            RetrofitClient.request(cbUiseongUiTae,"call_uiseongs", resultMap);
+        }
 
 
-        //사전 데이터 받아와서 리스트에 추가
-
-        /*for(int i = 0; i < 10; i++){
-
-        }*/
 /*
         ArrayList<String> url = new ArrayList<>();
 
@@ -105,7 +103,7 @@ public class DictionaryActivity extends AppCompatActivity {
                 uiseongList = response.body();
                 Log.d(TAG, "의성이"+ uiseongList.get(0).getLink());
 
-                adapter = new RecyclerviewAdapter(uiseongList) ;       //에러나서 주석처리해둠******
+                adapter = new RecyclerviewAdapter(uiseongList) ;
                 recyclerView.setAdapter(adapter) ;
 
             } else {

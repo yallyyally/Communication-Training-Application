@@ -41,10 +41,10 @@ var Uiseong=require('./models/uiseong');
 
 /*
 var XLSX= require('xlsx');
-var workbook = XLSX.readFile('uiseong1.xlsx');
+var workbook = XLSX.readFile('uiseong.xlsx');
 let worksheet = workbook.Sheets['Sheet1'];
 
-var cell_idx=['A','B','C','D','E','F']
+var cell_idx=['A','B','C','D','E','F','G']
 
 //의성 의태
 
@@ -56,6 +56,9 @@ var cell_idx=['A','B','C','D','E','F']
                 link: worksheet[cell_idx[1]+i].v,
                 answer: worksheet[cell_idx[2]+i].v,
                 desc: worksheet[cell_idx[3]+i].v,
+                type: worksheet[cell_idx[4]+i].v,
+                example: worksheet[cell_idx[5]+i].v, 
+                extension: worksheet[cell_idx[6]+i].v
             }
         )
     

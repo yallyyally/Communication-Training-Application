@@ -54,24 +54,40 @@ public class ViewPagerAdapter extends PagerAdapter {
             TextView tvWord = (TextView) view.findViewById(R.id.tv_word) ;
             tvWord.setText(str);
 
+            String str_type = ulist.get(position).getType(); //의성, 의태어 구분
+            TextView tvType = (TextView) view.findViewById(R.id.tv_type) ;
+            tvType.setText(str_type);
+
             String str1 = ulist.get(position).getDesc();
             TextView tvMeaning = (TextView) view.findViewById(R.id.tv_meaning);
             tvMeaning.setText(str1);
 
-            String str2 = ulist.get(position).getDesc();
+            String str2 = ulist.get(position).getExample();
             TextView tvEx = (TextView) view.findViewById(R.id.tv_ex_1);
             tvEx.setText(str2);
 
             String str3 = ulist.get(position).getLink();
-            Log.d("retrofit","링크"+ulist.get(position).getLink());
+            //Log.d("retrofit","링크"+ulist.get(position).getLink());
             ImageView ivSample = (ImageView) view.findViewById(R.id.iv_sample);
 
-            Glide.with(mContext)
-                    //.asGif()
-                    .load(str3)
-                    //.override(200, 100)
-                    .error(R.drawable.ic_outline_sentiment_dissatisfied_24)
-                    .into(ivSample);
+            if(ulist.get(position).getExtention().equals("jpg")){ //jpg 형식일 경우
+                Glide.with(mContext)
+                        //.asGif()
+                        .load(str3)
+                        //.override(200, 100)
+                        .error(R.drawable.ic_outline_sentiment_dissatisfied_24)
+                        .into(ivSample);
+            }
+            else{ //gif 형식일 경우
+                Glide.with(mContext)
+                        .asGif()
+                        .load(str3)
+                        //.override(200, 100)
+                        .error(R.drawable.ic_outline_sentiment_dissatisfied_24)
+                        .into(ivSample);
+                
+            }
+            
         }
 
         // 뷰페이저에 추가.

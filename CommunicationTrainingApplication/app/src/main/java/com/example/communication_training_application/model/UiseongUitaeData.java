@@ -18,6 +18,16 @@ public class UiseongUitaeData implements Serializable {
     @SerializedName("desc")
     private String desc; //설명
 
+    @SerializedName("type")
+    private String type; //구분(의성,의태)
+
+    @SerializedName("example")
+    private String example; //예문
+
+    @SerializedName("extension")
+    private String extention; //파일 확장자
+
+
     @Override
     public String toString() {
         return "UiseongUitaeData{" +
@@ -25,6 +35,9 @@ public class UiseongUitaeData implements Serializable {
                 ", link='" + link + '\'' +
                 ", answer='" + answer + '\'' +
                 ", desc='" + desc + '\'' +
+                ", type='" + type + '\'' +
+                ", example='" + example + '\'' +
+                ", extention='" + extention + '\'' +
                 '}';
     }
 
@@ -58,5 +71,29 @@ public class UiseongUitaeData implements Serializable {
 
     public void setDesc(String desc) {
         this.desc = desc;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getExample() {
+        return example;
+    }
+
+    public void setExample(String example) {
+        this.example = example;
+    }
+
+    public String getExtention() {
+        return extention;
+    }
+
+    public void setExtention(String extention) {
+        this.extention = extention;
     }
 }
