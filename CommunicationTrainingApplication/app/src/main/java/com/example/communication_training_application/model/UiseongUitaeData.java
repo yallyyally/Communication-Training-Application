@@ -2,7 +2,9 @@ package com.example.communication_training_application.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class UiseongUitaeData {
+import java.io.Serializable;
+
+public class UiseongUitaeData implements Serializable {
 
     @SerializedName("id")
     private int id; //단어 id

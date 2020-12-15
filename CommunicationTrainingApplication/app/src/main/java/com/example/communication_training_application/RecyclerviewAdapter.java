@@ -9,11 +9,13 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.communication_training_application.model.UiseongUitaeData;
+
 import java.util.ArrayList;
 
 public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapter.ViewHolder> {
 
-    private ArrayList<Uiseong> mData = null ;
+    private ArrayList<UiseongUitaeData> mData = null ;
 
     // 아이템 뷰를 저장하는 뷰홀더 클래스.
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -44,7 +46,7 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
     }
 
     // 생성자에서 데이터 리스트 객체를 전달받음.
-    RecyclerviewAdapter(ArrayList<Uiseong> ulist) {
+    RecyclerviewAdapter(ArrayList<UiseongUitaeData> ulist) {
         mData = ulist ;
     }
 
@@ -63,7 +65,7 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
     // onBindViewHolder() - position에 해당하는 데이터를 뷰홀더의 아이템뷰에 표시.
     @Override
     public void onBindViewHolder(RecyclerviewAdapter.ViewHolder holder, int position) {
-        String text = mData.get(position).getWord();
+        String text = mData.get(position).getAnswer();
         holder.textView1.setText(text) ;
     }
 

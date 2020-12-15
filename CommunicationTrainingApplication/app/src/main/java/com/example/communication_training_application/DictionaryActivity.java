@@ -17,7 +17,6 @@ import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
@@ -31,7 +30,7 @@ import retrofit2.Response;
 public class DictionaryActivity extends AppCompatActivity {
     //ArrayList<Uiseong> ulist = new ArrayList<>();
 
-    List<UiseongUitaeData> uiseongList = new ArrayList<>();
+    ArrayList<UiseongUitaeData> uiseongList = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,7 +58,7 @@ public class DictionaryActivity extends AppCompatActivity {
         /*for(int i = 0; i < 10; i++){
 
         }*/
-
+/*
         ArrayList<String> url = new ArrayList<>();
 
         url.add("https://media.giphy.com/media/l3V0BY1HsT9DJskVi/giphy.gif");
@@ -72,7 +71,7 @@ public class DictionaryActivity extends AppCompatActivity {
         url.add("https://media.giphy.com/media/TObbUke0z8Mo/giphy.gif");
         url.add("https://media.giphy.com/media/TObbUke0z8Mo/giphy.gif");
         url.add("https://media.giphy.com/media/TObbUke0z8Mo/giphy.gif");
-
+*/
         //사전 데이터 받아와서 리스트에 추가
         /*for(int i = 0; i < 10; i++){
             ulist.add(new Uiseong("word "+i, "meaning "+i, "example "+i, url.get(i)));
@@ -90,16 +89,16 @@ public class DictionaryActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this)) ;
 
         // 리사이클러뷰에 RecyclerviewAdapter 객체 지정.
-        //RecyclerviewAdapter adapter = new RecyclerviewAdapter(ulist) ;       에러나서 주석처리해둠******
-        //recyclerView.setAdapter(adapter) ;
+        RecyclerviewAdapter adapter = new RecyclerviewAdapter(uiseongList) ;       //에러나서 주석처리해둠******
+        recyclerView.setAdapter(adapter) ;
     }
 
-    Callback cbUiseongUiTae = new Callback<List<UiseongUitaeData>>() {
+    Callback cbUiseongUiTae = new Callback<ArrayList<UiseongUitaeData>>() {
         private final static String TAG = "RetrofitCommunication";
         String cbTAG = "레트로핏 - cbRoomCheck()";
 
         @Override
-        public void onResponse(Call<List<UiseongUitaeData>> call, Response<List<UiseongUitaeData>> response) {
+        public void onResponse(Call<ArrayList<UiseongUitaeData>> call, Response<ArrayList<UiseongUitaeData>> response) {
             if (response.isSuccessful()) {
                 uiseongList = response.body();
                 Log.d(TAG, "의성이"+ uiseongList.get(0));
@@ -113,7 +112,7 @@ public class DictionaryActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onFailure(Call<List<UiseongUitaeData>> call, Throwable t) {
+        public void onFailure(Call<ArrayList<UiseongUitaeData>> call, Throwable t) {
             //CommonAlert.toastMsg(cbTAG + "레트로핏 콜백 요청 실패(2) " + t, mContext);
             Log.e(TAG, cbTAG + "레트로핏 콜백 요청 실패(2) " + t);
         }
