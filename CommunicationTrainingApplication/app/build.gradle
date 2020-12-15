@@ -44,5 +44,7 @@ dependencies {
     implementation 'org.conscrypt:conscrypt-android:2.5.0'
 
     implementation files('libs/YouTubeAndroidPlayerApi.jar')
-    //libraries 에 youtube~~.jar 파일 넣고 이 파일도 고쳐주기
+
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 }
