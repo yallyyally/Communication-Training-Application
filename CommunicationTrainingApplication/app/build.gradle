@@ -41,4 +41,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-scalars:2.6.4'
 
     implementation 'org.conscrypt:conscrypt-android:2.5.0'
+
+    implementation files('C:/Communication-Training-Application/CommunicationTrainingApplication/.idea/libraries/YouTubeAndroidPlayerApi.jar')
+    //libraries 에 youtube~~.jar 파일 넣고 이 파일도 고쳐주기
 }

@@ -3,7 +3,9 @@
     package="com.example.communication_training_application">
 
 
+
     <uses-permission android:name="android.permission.INTERNET"/>
+
 
     <application
         android:allowBackup="true"
@@ -13,15 +15,18 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UiseongQuizActivity">
+        <activity android:name=".YoutubeSampleActivity">
+
+
         </activity>
-        <activity android:name=".LipReadingActivity"></activity>
-        <activity android:name=".DictionaryActivity"></activity>
+        <activity android:name=".UiseongQuizActivity"></activity>
+        <activity android:name=".LipReadingActivity" />
+        <activity android:name=".DictionaryActivity" />
         <activity android:name=".MainActivity">
-            <intent-filter>
+        <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        </intent-filter>
         </activity>
     </application>
 
