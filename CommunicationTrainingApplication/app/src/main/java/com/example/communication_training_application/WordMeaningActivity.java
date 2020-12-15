@@ -7,6 +7,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import java.util.ArrayList;
+
 public class WordMeaningActivity extends AppCompatActivity {
     private ViewPager viewPager ;
     private ViewPagerAdapter pagerAdapter ;
@@ -19,8 +21,11 @@ public class WordMeaningActivity extends AppCompatActivity {
         int cnt = getIntent().getIntExtra("data-count",1);
         int position = getIntent().getIntExtra("data-position", 0);
 
+        ArrayList<Uiseong> ulist = (ArrayList<Uiseong>) getIntent().getSerializableExtra("data");
+
+
         viewPager = (ViewPager) findViewById(R.id.viewPager) ;
-        pagerAdapter = new ViewPagerAdapter(this, position, cnt) ;
+        pagerAdapter = new ViewPagerAdapter(this, position, cnt, ulist) ;
         viewPager.setAdapter(pagerAdapter) ;
         viewPager.setCurrentItem(position);
 

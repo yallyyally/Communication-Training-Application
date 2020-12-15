@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapter.ViewHolder> {
 
-    private ArrayList<String> mData = null ;
+    private ArrayList<Uiseong> mData = null ;
 
     // 아이템 뷰를 저장하는 뷰홀더 클래스.
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -35,6 +35,7 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
 
                     intent.putExtra("data-count", getItemCount());
                     intent.putExtra("data-position", position);
+                    intent.putExtra("data", mData);
 
                     context.startActivity(intent);
                 }
@@ -43,8 +44,8 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
     }
 
     // 생성자에서 데이터 리스트 객체를 전달받음.
-    RecyclerviewAdapter(ArrayList<String> list) {
-        mData = list ;
+    RecyclerviewAdapter(ArrayList<Uiseong> ulist) {
+        mData = ulist ;
     }
 
     // onCreateViewHolder() - 아이템 뷰를 위한 뷰홀더 객체 생성하여 리턴.
@@ -62,7 +63,7 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
     // onBindViewHolder() - position에 해당하는 데이터를 뷰홀더의 아이템뷰에 표시.
     @Override
     public void onBindViewHolder(RecyclerviewAdapter.ViewHolder holder, int position) {
-        String text = mData.get(position) ;
+        String text = mData.get(position).getWord();
         holder.textView1.setText(text) ;
     }
 
