@@ -67,6 +67,9 @@ public class LipReadingActivity extends YouTubeBaseActivity {
 
     //홈 이동 버튼
     Button Button_Home;
+
+    Handler handler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -105,7 +108,7 @@ public class LipReadingActivity extends YouTubeBaseActivity {
                 myAlertBuilder.setTitle("정답 보기");
                 myAlertBuilder.setMessage(answer);
 
-                // 버튼 추가 (Ok 버튼과 Cancle 버튼 )
+                // 버튼 추가
                 myAlertBuilder.setPositiveButton("문제로 이동", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // OK 버튼을 눌렸을 경우
@@ -210,7 +213,7 @@ public class LipReadingActivity extends YouTubeBaseActivity {
         startPoint_sec = 30;
         startPoint_mili = ((startPoint_min * 60) + startPoint_sec) * 1000;
 
-        //종료시간 설정, 1분 40초 종료 가정 (재생시간 5초)
+        //종료시간 설정, 1분 40초 종료 가정 (재생시간 10초)
         endPoint_min = 1;
         endPoint_sec = 40;
         endPoint_mili = ((endPoint_min * 60) + endPoint_sec) * 1000;
@@ -225,6 +228,24 @@ public class LipReadingActivity extends YouTubeBaseActivity {
 
         //하단바 안보이게
         mYouTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.CHROMELESS);
+
+        handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //For every 1 second, check the current time and endTime
+                if (mYouTubePlayer.getCurrentTimeMillis() <= endPoint_mili) {
+                    handler.postDelayed(this, 1000);
+                } else {
+                    handler.removeCallbacks(this); //no longer required
+                    mYouTubePlayer.pause(); //and Pause the video
+                    //and restart
+                    //mYouTubePlayer.loadVideo(VIDEO_CODE, startPoint_mili); //1분 1초부터 시작
+
+
+                }
+            }
+        }, 1000);
     }
     private void youTubePlayerSetup() {
 
@@ -261,7 +282,7 @@ public class LipReadingActivity extends YouTubeBaseActivity {
                     //하단바 안보이게
                     mYouTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.CHROMELESS);
 
-                    final Handler handler = new Handler();
+                     handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
