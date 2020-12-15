@@ -103,7 +103,7 @@ public class DictionaryActivity extends AppCompatActivity {
         public void onResponse(Call<ArrayList<UiseongUitaeData>> call, Response<ArrayList<UiseongUitaeData>> response) {
             if (response.isSuccessful()) {
                 uiseongList = response.body();
-                Log.d(TAG, "의성이"+ uiseongList.get(0).getAnswer());
+                Log.d(TAG, "의성이"+ uiseongList.get(0).getLink());
 
                 adapter = new RecyclerviewAdapter(uiseongList) ;       //에러나서 주석처리해둠******
                 recyclerView.setAdapter(adapter) ;

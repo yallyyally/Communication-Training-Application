@@ -1,6 +1,7 @@
 package com.example.communication_training_application;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,8 @@ public class ViewPagerAdapter extends PagerAdapter {
         cnt_data = cnt;
         //cPosition = position;
         ulist = list;
+
+        Log.d("retrofit",ulist.get(0).getLink());
     }
 
     @Override
@@ -60,10 +63,11 @@ public class ViewPagerAdapter extends PagerAdapter {
             tvEx.setText(str2);
 
             String str3 = ulist.get(position).getLink();
+            Log.d("retrofit","링크"+ulist.get(position).getLink());
             ImageView ivSample = (ImageView) view.findViewById(R.id.iv_sample);
 
             Glide.with(mContext)
-                    .asGif()
+                    //.asGif()
                     .load(str3)
                     //.override(200, 100)
                     .error(R.drawable.ic_outline_sentiment_dissatisfied_24)

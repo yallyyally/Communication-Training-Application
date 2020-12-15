@@ -2,6 +2,7 @@ package com.example.communication_training_application;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +49,7 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
     // 생성자에서 데이터 리스트 객체를 전달받음.
     RecyclerviewAdapter(ArrayList<UiseongUitaeData> ulist) {
         mData = ulist ;
+        Log.d("retrofit", ulist.get(0).getAnswer());
     }
 
     // onCreateViewHolder() - 아이템 뷰를 위한 뷰홀더 객체 생성하여 리턴.
