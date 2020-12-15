@@ -74,9 +74,9 @@ public class DictionaryActivity extends AppCompatActivity {
         url.add("https://media.giphy.com/media/TObbUke0z8Mo/giphy.gif");
 
         //사전 데이터 받아와서 리스트에 추가
-        for(int i = 0; i < 10; i++){
+        /*for(int i = 0; i < 10; i++){
             ulist.add(new Uiseong("word "+i, "meaning "+i, "example "+i, url.get(i)));
-        }
+        }*/
         /*
         // 리사이클러뷰에 표시할 데이터 리스트 생성.
         ArrayList<String> list = new ArrayList<>();
