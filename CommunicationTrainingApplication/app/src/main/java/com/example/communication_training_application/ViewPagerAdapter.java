@@ -54,7 +54,7 @@ public class ViewPagerAdapter extends PagerAdapter {
             TextView tvWord = (TextView) view.findViewById(R.id.tv_word) ;
             tvWord.setText(str);
 
-            String str_type = ulist.get(position).getType(); //의성, 의태어 구분
+            String str_type = ulist.get(position).getType()+"어"; //의성, 의태어 구분
             TextView tvType = (TextView) view.findViewById(R.id.tv_type) ;
             tvType.setText(str_type);
 
