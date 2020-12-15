@@ -4,10 +4,13 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
@@ -54,6 +57,16 @@ public class ViewPagerAdapter extends PagerAdapter {
             String str2 = ulist.get(position).getEx();
             TextView tvEx = (TextView) view.findViewById(R.id.tv_ex_1);
             tvEx.setText(str2);
+
+            String str3 = ulist.get(position).getUrl();
+            ImageView ivSample = (ImageView) view.findViewById(R.id.iv_sample);
+
+            Glide.with(mContext)
+                    .asGif()
+                    .load(str3)
+                    //.override(200, 100)
+                    .error(R.drawable.ic_outline_sentiment_dissatisfied_24)
+                    .into(ivSample);
         }
 
         // 뷰페이저에 추가.

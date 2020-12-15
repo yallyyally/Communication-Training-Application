@@ -60,6 +60,23 @@ public class DictionaryActivity extends AppCompatActivity {
 
         }*/
 
+        ArrayList<String> url = new ArrayList<>();
+
+        url.add("https://media.giphy.com/media/l3V0BY1HsT9DJskVi/giphy.gif");
+        url.add("https://media.giphy.com/media/l3V0lsGtTMSB5YNgc/giphy.gif");
+        url.add("https://media.giphy.com/media/3o6ozFNGTtax2pSGmA/giphy.gif");
+        url.add("https://media.giphy.com/media/3o6ozxRrKIQgKyKdoc/giphy.gif");
+        url.add("https://media.giphy.com/media/TObbUke0z8Mo/giphy.gif");
+        url.add("https://media.giphy.com/media/TObbUke0z8Mo/giphy.gif");
+        url.add("https://media.giphy.com/media/TObbUke0z8Mo/giphy.gif");
+        url.add("https://media.giphy.com/media/TObbUke0z8Mo/giphy.gif");
+        url.add("https://media.giphy.com/media/TObbUke0z8Mo/giphy.gif");
+        url.add("https://media.giphy.com/media/TObbUke0z8Mo/giphy.gif");
+
+        //사전 데이터 받아와서 리스트에 추가
+        for(int i = 0; i < 10; i++){
+            ulist.add(new Uiseong("word "+i, "meaning "+i, "example "+i, url.get(i)));
+        }
         /*
         // 리사이클러뷰에 표시할 데이터 리스트 생성.
         ArrayList<String> list = new ArrayList<>();
