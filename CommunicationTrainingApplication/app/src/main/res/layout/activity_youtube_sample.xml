@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".YoutubeSampleActivity">
+
     <com.google.android.youtube.player.YouTubePlayerView
         android:id="@+id/YoutubeView_youtubeplayer"
         android:layout_width="match_parent"
@@ -13,14 +14,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/TextView_Time"
+        android:layout_width="match_parent"
+        android:textSize="20dp"
+        android:text="경과시간"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints" />
+
     <Button
         android:id="@+id/Button_Next"
-        android:background="@drawable/btn_radius"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="256dp"
         android:layout_marginLeft="256dp"
         android:layout_marginTop="456dp"
+        android:background="@drawable/btn_radius"
         android:text="다음 문제"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
