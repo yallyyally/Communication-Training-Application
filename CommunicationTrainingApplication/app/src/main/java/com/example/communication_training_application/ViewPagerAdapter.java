@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.bumptech.glide.Glide;
+import com.example.communication_training_application.model.UiseongUitaeData;
 
 import java.util.ArrayList;
 
@@ -21,14 +22,14 @@ public class ViewPagerAdapter extends PagerAdapter {
     private int cnt_data = 1;
     //private int cPosition = 0;
 
-    private ArrayList<Uiseong> ulist = new ArrayList<>();
+    private ArrayList<UiseongUitaeData> ulist = new ArrayList<>();
 
     public ViewPagerAdapter() {
 
     }
 
     // Context를 전달받아 mContext에 저장하는 생성자 추가.
-    public ViewPagerAdapter(Context context, int position, int cnt, ArrayList<Uiseong> list) {
+    public ViewPagerAdapter(Context context, int position, int cnt, ArrayList<UiseongUitaeData> list) {
         mContext = context ;
         cnt_data = cnt;
         //cPosition = position;
@@ -46,19 +47,19 @@ public class ViewPagerAdapter extends PagerAdapter {
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.page, container, false);
 
-            String str = ulist.get(position).getWord();
+            String str = ulist.get(position).getAnswer();
             TextView tvWord = (TextView) view.findViewById(R.id.tv_word) ;
             tvWord.setText(str);
 
-            String str1 = ulist.get(position).getMeaning();
+            String str1 = ulist.get(position).getDesc();
             TextView tvMeaning = (TextView) view.findViewById(R.id.tv_meaning);
             tvMeaning.setText(str1);
 
-            String str2 = ulist.get(position).getEx();
+            String str2 = ulist.get(position).getDesc();
             TextView tvEx = (TextView) view.findViewById(R.id.tv_ex_1);
             tvEx.setText(str2);
 
-            String str3 = ulist.get(position).getUrl();
+            String str3 = ulist.get(position).getLink();
             ImageView ivSample = (ImageView) view.findViewById(R.id.iv_sample);
 
             Glide.with(mContext)
