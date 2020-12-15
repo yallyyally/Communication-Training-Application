@@ -65,6 +65,8 @@ public class LipReadingActivity extends YouTubeBaseActivity {
     //정답 보기 버튼
     Button Button_watchAnswer;
 
+    //홈 이동 버튼
+    Button Button_Home;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -85,6 +87,7 @@ public class LipReadingActivity extends YouTubeBaseActivity {
 
 
         Button_watchAnswer = findViewById(R.id.Button_WatchAnswer);
+        Button_Home = findViewById(R.id.Button_Home);
 
         //세팅, 초기화
         youTubePlayerSetup();
@@ -113,6 +116,14 @@ public class LipReadingActivity extends YouTubeBaseActivity {
                 // Alert를 생성해주고 보여주는 메소드(show를 선언해야 Alert가 생성됨)
                 myAlertBuilder.show();
 
+            }
+        });
+        //홈으로 이동
+        Button_Home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
             }
         });
 
