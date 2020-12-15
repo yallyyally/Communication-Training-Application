@@ -12,71 +12,77 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
 
-public class YoutubeSampleActivity extends YouTubeBaseActivity{
+public class YoutubeSampleActivity extends YouTubeBaseActivity {
 
-    YouTubePlayerView youTubePlayerView;
-    Button btn;
-    YouTubePlayer.OnInitializedListener listener;
+    private YouTubePlayerView mYouTubePlayerView;
+    private YouTubePlayer.OnInitializedListener mOnInitializedListener;
+    private YouTubePlayer mYouTubePlayer;
+    private Button mButton;
 
-    String videoPath;
-
-    int starPoint_min;
-    int startPoint_sec;
-
-    int startPoint_mili;
+    private String VIDEO_CODE;
+    private final String VIDEO_CODE_ORG = "-Uf2YC1YBuI";
+    private final String API_KEY = "apikey";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_youtube_sample);
+        youTubePlayerSetup();
+        mButton = findViewById(R.id.Button_Next);
 
-        btn = findViewById(R.id.youtubeBtn);
-        youTubePlayerView = findViewById(R.id.youtubeView);
+        mButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-        starPoint_min = 1;
-        startPoint_sec = 1;
-        startPoint_mili = ((starPoint_min * 60) + startPoint_sec) * 1000;
-        videoPath="2jdNqxerUao";
+                //시작 시간 설정
+                int starPoint_min = 1;
+                int startPoint_sec = 1;
+                int startPoint_mili = ((starPoint_min * 60) + startPoint_sec) * 1000;
 
-        listener = new YouTubePlayer.OnInitializedListener() {
+                //동영상 설정
+                VIDEO_CODE= "2jdNqxerUao";
+
+                mYouTubePlayer.loadVideo(VIDEO_CODE, startPoint_mili); //1분 1초부터 시작
+
+
+                //하단바 안보이게
+                mYouTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.CHROMELESS);
+
+            }
+        });
+    }
+
+    //초기 설정
+    private void youTubePlayerSetup() {
+
+        mYouTubePlayerView = (YouTubePlayerView) findViewById(R.id.YoutubeView_youtubeplayer);
+        mOnInitializedListener = new YouTubePlayer.OnInitializedListener() {
 
             @Override
             public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
+                if (!b) {
 
 
-                youTubePlayer.loadVideo(videoPath, startPoint_mili); //1분 1초부터 시작
-                youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.CHROMELESS);
-                //https://www.youtube.com/watch?v=NmkYHmiNArc 유투브에서 v="" 이부분이 키에 해당
+                    mYouTubePlayer = youTubePlayer;
 
+                    //시작 시간 설정
+                    int starPoint_min_org = 1;
+                    int startPoint_sec_org = 30;
+                    int startPoint_mili_org = ((starPoint_min_org * 60) + startPoint_sec_org) * 1000;
 
+                    mYouTubePlayer.loadVideo(VIDEO_CODE_ORG, startPoint_mili_org); //1분 1초부터 시작
+
+                    //하단바 안보이게
+                    mYouTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.CHROMELESS);
+                }
             }
 
             @Override
             public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
-                Toast.makeText(getApplicationContext(), "동영상 호출 실패", Toast.LENGTH_SHORT).show();
+
             }
-
-
-
         };
-        youTubePlayerView.initialize("아무키", listener);
 
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"다음 문제",Toast.LENGTH_SHORT).show();
-
-                //버튼 누르면 동영상 변경
-                videoPath = "NmkYHmiNArc";
-
-                 starPoint_min = 1;
-                 startPoint_sec = 30;
-
-                 startPoint_mili = ((starPoint_min * 60) + startPoint_sec) * 1000;
-
-                youTubePlayerView.initialize("아무키", listener);
-
-            }
-        });
+        mYouTubePlayerView.initialize(API_KEY, mOnInitializedListener);
     }
 }
