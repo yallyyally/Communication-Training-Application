@@ -3,6 +3,7 @@ package com.example.communication_training_application;
 import android.util.Log;
 
 import com.example.communication_training_application.model.LipReadingData;
+import com.example.communication_training_application.model.UiseongUitaeData;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -44,6 +45,11 @@ public class RetrofitClient {
 
         if ("call_lip_reading".equals(gubun)) {
             Call<List<LipReadingData>> call = service.getLipReading();
+            call.enqueue(callback);
+        }
+
+        if ("call_uiseongs".equals(gubun)) {
+            Call<List<UiseongUitaeData>> call = service.getUiseongUitae();
             call.enqueue(callback);
         }
 
