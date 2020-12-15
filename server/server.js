@@ -122,7 +122,7 @@ app.get('/api/lip_reading',(req,res)=>{
 
 app.get('/api/uiseong',(req,res)=>{
 
-    Uiseong.find({},['id','answer']).sort({id:1}).exec(function(err,uiseongs){
+    Uiseong.find({}).sort({id:1}).exec(function(err,uiseongs){
         if(err) return res.status(500).json({error:err});
         if(!uiseongs) console.log("aaa");
         console.log(uiseongs);

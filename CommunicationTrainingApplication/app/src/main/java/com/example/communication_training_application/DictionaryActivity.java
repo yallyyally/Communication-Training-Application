@@ -31,6 +31,8 @@ public class DictionaryActivity extends AppCompatActivity {
     //ArrayList<Uiseong> ulist = new ArrayList<>();
 
     ArrayList<UiseongUitaeData> uiseongList = new ArrayList<>();
+    RecyclerView recyclerView;
+    RecyclerviewAdapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -76,6 +78,7 @@ public class DictionaryActivity extends AppCompatActivity {
         /*for(int i = 0; i < 10; i++){
             ulist.add(new Uiseong("word "+i, "meaning "+i, "example "+i, url.get(i)));
         }*/
+
         /*
         // 리사이클러뷰에 표시할 데이터 리스트 생성.
         ArrayList<String> list = new ArrayList<>();
@@ -85,12 +88,11 @@ public class DictionaryActivity extends AppCompatActivity {
          */
 
         // 리사이클러뷰에 LinearLayoutManager 객체 지정.
-        RecyclerView recyclerView = findViewById(R.id.rv) ;
+        recyclerView = findViewById(R.id.rv) ;
         recyclerView.setLayoutManager(new LinearLayoutManager(this)) ;
 
         // 리사이클러뷰에 RecyclerviewAdapter 객체 지정.
-        RecyclerviewAdapter adapter = new RecyclerviewAdapter(uiseongList) ;       //에러나서 주석처리해둠******
-        recyclerView.setAdapter(adapter) ;
+
     }
 
     Callback cbUiseongUiTae = new Callback<ArrayList<UiseongUitaeData>>() {
@@ -103,7 +105,8 @@ public class DictionaryActivity extends AppCompatActivity {
                 uiseongList = response.body();
                 Log.d(TAG, "의성이"+ uiseongList.get(0).getAnswer());
 
-
+                adapter = new RecyclerviewAdapter(uiseongList) ;       //에러나서 주석처리해둠******
+                recyclerView.setAdapter(adapter) ;
 
             } else {
                 //CommonAlert.toastMsg(cbTAG + "레트로핏 콜백 요청 실패(1) ", mContext);
