@@ -31,16 +31,14 @@ public class LipReadingActivity extends YouTubeBaseActivity {
     //https://www.youtube.com/watch?v=2jdNqxerUao
     private String youtubeLink;
     private String VIDEO_CODE; //동영상 링크: v=다음 거로 파싱해야 함.
-    private String VIDEO_CODE_ORG;
     private final String API_KEY = "apikey";
 
+    private String startPoint_str; //시작지점(문자열)
     private int startPoint_mili; //시작 지점(밀리초)
-    private int startPoint_min;  //시작 지점(분)
-    private int startPoint_sec; //시작지점(초)
 
+
+    private String endPoint_str; //종료지점(문자열)
     private int endPoint_mili; //종료 지점(밀리초)
-    private int endPoint_min;  //종료 지점(분)
-    private int endPoint_sec; //종료지점(초)
 
     private int runningTime; // 지속 시간(영상 길이, 밀리초)
 
@@ -76,7 +74,7 @@ public class LipReadingActivity extends YouTubeBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_lip_reading_sentence);
 
-        answer = "울라불라불루짱";
+        answer = "울라불라불루짱"; //에러 방지
         //뷰 잇기
         LinearLayout_a = findViewById(R.id.Linearlayout_A);
         LinearLayout_b = findViewById(R.id.Linearlayout_B);
@@ -208,15 +206,13 @@ public class LipReadingActivity extends YouTubeBaseActivity {
         TextView_d.setText(exampleD);
 
 
-        //시작 시간 설정
-        startPoint_min = 1;
-        startPoint_sec = 30;
-        startPoint_mili = ((startPoint_min * 60) + startPoint_sec) * 1000;
+        //시작 시간 설정 - "00:03:00" 3분 부터 시작 가정
+        startPoint_str = "00:02:45";
+        startPoint_mili = strToMilli(startPoint_str);
 
-        //종료시간 설정, 1분 40초 종료 가정 (재생시간 10초)
-        endPoint_min = 1;
-        endPoint_sec = 40;
-        endPoint_mili = ((endPoint_min * 60) + endPoint_sec) * 1000;
+        //종료시간 설정, 3분 9초 종료 가정 (재생시간 5초)
+        endPoint_str="00:02:50";
+        endPoint_mili = strToMilli(endPoint_str);
 
 
         //동영상 설정
@@ -259,19 +255,14 @@ public class LipReadingActivity extends YouTubeBaseActivity {
 
                     mYouTubePlayer = youTubePlayer;
 
-                    //시작 시간 설정 - 1분 30초부터 시작한다 가정
+                    //시작 시간 설정 - 2분 0초부터 시작한다 가정
+                    startPoint_str = "00:02:00";
+                    startPoint_mili =strToMilli(startPoint_str);
 
-                    startPoint_min = 1;
-                    startPoint_sec = 30;
-                    startPoint_mili = ((startPoint_min * 60) + startPoint_sec) * 1000;
+                    //종료시간 설정, 2분 7초 종료 가정 (재생시간 5초)
+                    endPoint_str = "00:02:07";
+                    endPoint_mili = strToMilli(endPoint_str);
 
-                    //종료시간 설정, 1분 35초 종료 가정 (재생시간 5초)
-                    endPoint_min = 1;
-                    endPoint_sec = 35;
-                    endPoint_mili = ((endPoint_min * 60) + endPoint_sec) * 1000;
-
-                    //5초 지속 시간 가정
-                    runningTime = endPoint_mili - startPoint_mili;
 
                     //동영상 링크 서버에서 받아옴, 파싱
                     youtubeLink = "https://www.youtube.com/watch?v=2jdNqxerUao";
@@ -324,6 +315,20 @@ public class LipReadingActivity extends YouTubeBaseActivity {
 
 
         mYouTubePlayerView.initialize(API_KEY, mOnInitializedListener);
+
+    }
+
+    public int strToMilli(String time){
+        //time == "00:02:00"
+        String hour = time.split(":")[0];
+        String minute = time.split(":")[1];
+        String second = time.split(":")[2];
+
+        int hourInt = Integer.parseInt(hour);
+        int minuteInt = Integer.parseInt(minute);
+        int secondInt = Integer.parseInt(second);
+
+        return ( secondInt + minuteInt*60 + hourInt * 3600) * 1000;
 
     }
 
