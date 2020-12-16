@@ -29,7 +29,7 @@ public class ViewPagerAdapter extends PagerAdapter {
     }
 
     // Context를 전달받아 mContext에 저장하는 생성자 추가.
-    public ViewPagerAdapter(Context context, int position, int cnt, ArrayList<UiseongUitaeData> list) {
+    public ViewPagerAdapter(Context context, int cnt, ArrayList<UiseongUitaeData> list) {
         mContext = context ;
         cnt_data = cnt;
         //cPosition = position;
