@@ -2,8 +2,11 @@ package com.example.communication_training_application;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
@@ -27,12 +30,17 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DictionaryActivity extends AppCompatActivity {
+public class DictionaryActivity extends AppCompatActivity implements TextWatcher {
     //ArrayList<Uiseong> ulist = new ArrayList<>();
 
     ArrayList<UiseongUitaeData> uiseongList = new ArrayList<>();
     RecyclerView recyclerView;
     RecyclerviewAdapter adapter;
+    //SearchRecyclerViewAdapter sAdapter;
+
+    //ArrayList <UiseongUitaeData> items = new ArrayList<>();
+
+    //private RecyclerviewAdapter recyclerviewAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,46 +56,20 @@ public class DictionaryActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        EditText editText = (EditText) findViewById(R.id.search_bar);
+        editText.addTextChangedListener(this);
+
 
         HashMap<String, String> resultMap = new HashMap();
 
         trustAllHosts();
+        RetrofitClient.request(cbUiseongUiTae,"call_uiseongs", resultMap);
 
-        if(uiseongList.isEmpty()){
-            RetrofitClient.request(cbUiseongUiTae,"call_uiseongs", resultMap);
-        }
-
-
-/*
-        ArrayList<String> url = new ArrayList<>();
-
-        url.add("https://media.giphy.com/media/l3V0BY1HsT9DJskVi/giphy.gif");
-        url.add("https://media.giphy.com/media/l3V0lsGtTMSB5YNgc/giphy.gif");
-        url.add("https://media.giphy.com/media/3o6ozFNGTtax2pSGmA/giphy.gif");
-        url.add("https://media.giphy.com/media/3o6ozxRrKIQgKyKdoc/giphy.gif");
-        url.add("https://media.giphy.com/media/TObbUke0z8Mo/giphy.gif");
-        url.add("https://media.giphy.com/media/TObbUke0z8Mo/giphy.gif");
-        url.add("https://media.giphy.com/media/TObbUke0z8Mo/giphy.gif");
-        url.add("https://media.giphy.com/media/TObbUke0z8Mo/giphy.gif");
-        url.add("https://media.giphy.com/media/TObbUke0z8Mo/giphy.gif");
-        url.add("https://media.giphy.com/media/TObbUke0z8Mo/giphy.gif");
-*/
-        //사전 데이터 받아와서 리스트에 추가
-        /*for(int i = 0; i < 10; i++){
-            ulist.add(new Uiseong("word "+i, "meaning "+i, "example "+i, url.get(i)));
-        }*/
-
-        /*
-        // 리사이클러뷰에 표시할 데이터 리스트 생성.
-        ArrayList<String> list = new ArrayList<>();
-        for (int i=0; i<100; i++) {
-            list.add(String.format("TEXT %d", i)) ;
-        }
-         */
 
         // 리사이클러뷰에 LinearLayoutManager 객체 지정.
         recyclerView = findViewById(R.id.rv) ;
         recyclerView.setLayoutManager(new LinearLayoutManager(this)) ;
+
 
         // 리사이클러뷰에 RecyclerviewAdapter 객체 지정.
 
@@ -101,9 +83,10 @@ public class DictionaryActivity extends AppCompatActivity {
         public void onResponse(Call<ArrayList<UiseongUitaeData>> call, Response<ArrayList<UiseongUitaeData>> response) {
             if (response.isSuccessful()) {
                 uiseongList = response.body();
-                Log.d(TAG, "의성이"+ uiseongList.get(0).getLink());
+                Log.d(TAG, "의성이"+ uiseongList.get(0).getAnswer());
 
-                adapter = new RecyclerviewAdapter(uiseongList) ;
+                adapter = new RecyclerviewAdapter(uiseongList) ;       //에러나서 주석처리해둠******
+
                 recyclerView.setAdapter(adapter) ;
 
             } else {
@@ -146,5 +129,21 @@ public class DictionaryActivity extends AppCompatActivity {
         catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        adapter.getFilter().filter(charSequence);
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable editable) {
+
     }
 }

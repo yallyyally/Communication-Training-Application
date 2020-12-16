@@ -15,12 +15,11 @@ import com.example.communication_training_application.model.UiseongUitaeData;
 
 import java.util.ArrayList;
 
-public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapter.ViewHolder> implements Filterable {
+public class SearchRecyclerViewAdapter extends RecyclerView.Adapter<SearchRecyclerViewAdapter.ViewHolder> implements Filterable {
 
     private ArrayList<UiseongUitaeData> mData = null ;
-    ArrayList<UiseongUitaeData> unFilteredlist = new ArrayList<>();
-    ArrayList<UiseongUitaeData> filteredList = new ArrayList<>();
-    int[] id;
+    ArrayList<String> unFilteredlist;
+    ArrayList<String> filteredList;
 
     @Override
     public Filter getFilter() {
@@ -33,19 +32,12 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
                     filteredList = unFilteredlist;
                 }
                 else{
-                    ArrayList<UiseongUitaeData> filteringList = new ArrayList<>();
-                    for(int i = 0; i < unFilteredlist.size(); i++){
-                        String name = new String(unFilteredlist.get(i).getAnswer());
+                    ArrayList<String> filteringList = new ArrayList<>();
+                    for(String name : unFilteredlist){
                         if(name.toLowerCase().contains(charString.toLowerCase())){
-                            filteringList.add(unFilteredlist.get(i));
-
+                            filteringList.add(name);
                         }
                     }
-                    //for(String name : unFilteredlist){
-                    //    if(name.toLowerCase().contains(charString.toLowerCase())){
-                    //        filteringList.add(name);
-                    //    }
-                    //}
                     filteredList = filteringList;
                 }
                 FilterResults filterResults = new FilterResults();
@@ -55,7 +47,7 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
 
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                filteredList = (ArrayList<UiseongUitaeData>)filterResults.values;
+                filteredList = (ArrayList<String>)filterResults.values;
                 notifyDataSetChanged();
             }
         };
@@ -76,16 +68,12 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
                 public void onClick(View view) {
                     Context context = view.getContext();
                     int position = getAdapterPosition();
-                    //long id = getItemId();
                     //단어별 상세 화면으로 넘어가기
                     Intent intent = new Intent(context, WordMeaningActivity.class);
 
                     intent.putExtra("data-count", getItemCount());
-                    //Log.d("데이터 카운트","총"+getItemCount());
                     intent.putExtra("data-position", position);
-                    //Log.d("데이터 포지션", "위치"+position);
-                    intent.putExtra("data", filteredList);
-                    //Log.d("데이터 리스트","데이터"+filteredList);
+                    intent.putExtra("data", mData);
 
                     context.startActivity(intent);
                 }
@@ -94,33 +82,30 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
     }
 
     // 생성자에서 데이터 리스트 객체를 전달받음.
-    RecyclerviewAdapter(ArrayList<UiseongUitaeData> ulist) {
+    SearchRecyclerViewAdapter(ArrayList<UiseongUitaeData> ulist) {
         mData = ulist ;
-        filteredList = ulist;
-        unFilteredlist = ulist;
-        //for(int i = 0; i < mData.size(); i++){
-        //    filteredList.add(mData.get(i).getAnswer());
-        //    unFilteredlist.add(mData.get(i).getAnswer());
-            //id[i] = mData.get(i).getId();
-        //}
+        for(int i = 0; i < mData.size(); i++){
+            filteredList.add(mData.get(i).getAnswer());
+            unFilteredlist.add(mData.get(i).getAnswer());
+        }
     }
 
     // onCreateViewHolder() - 아이템 뷰를 위한 뷰홀더 객체 생성하여 리턴.
     @Override
-    public RecyclerviewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public SearchRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext() ;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) ;
 
         View view = inflater.inflate(R.layout.recyclerview_item, parent, false) ;
-        RecyclerviewAdapter.ViewHolder vh = new RecyclerviewAdapter.ViewHolder(view) ;
+        SearchRecyclerViewAdapter.ViewHolder vh = new SearchRecyclerViewAdapter.ViewHolder(view) ;
 
         return vh ;
     }
 
     // onBindViewHolder() - position에 해당하는 데이터를 뷰홀더의 아이템뷰에 표시.
     @Override
-    public void onBindViewHolder(RecyclerviewAdapter.ViewHolder holder, int position) {
-        String text = filteredList.get(position).getAnswer();
+    public void onBindViewHolder(SearchRecyclerViewAdapter.ViewHolder holder, int position) {
+        String text = filteredList.get(position);
         holder.textView1.setText(text) ;
     }
 

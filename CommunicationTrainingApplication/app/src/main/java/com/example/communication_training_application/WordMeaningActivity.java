@@ -22,12 +22,15 @@ public class WordMeaningActivity extends AppCompatActivity {
 
         int cnt = getIntent().getIntExtra("data-count",1);
         int position = getIntent().getIntExtra("data-position", 0);
+        //long id = getIntent().getLongExtra("data-position", 0);
+        //int position = (int) id;
+        //Log.d("position:","position is      "+position);
 
         ArrayList<UiseongUitaeData> ulist = (ArrayList<UiseongUitaeData>) getIntent().getSerializableExtra("data");
 
 
         viewPager = (ViewPager) findViewById(R.id.viewPager) ;
-        pagerAdapter = new ViewPagerAdapter(this, position, cnt, ulist) ;
+        pagerAdapter = new ViewPagerAdapter(this, cnt, ulist) ;
         viewPager.setAdapter(pagerAdapter) ;
         viewPager.setCurrentItem(position);
 
