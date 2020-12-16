@@ -6,20 +6,25 @@
     android:weightSum="13"
 >
 
-
         <!-- 이후 유튜브 플레이어 뷰로 고치기 !-->
-        <Button
-            android:id="@+id/Button_Home"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="left"
-            android:background="@drawable/ic_baseline_close_24" />
+    <Button
+        android:id="@+id/Button_Home"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="left"
+        android:background="@drawable/ic_baseline_close_24" />
 
-        <com.google.android.youtube.player.YouTubePlayerView
+    <Spinner
+        android:id="@+id/Question_Spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.8"/>
+
+    <com.google.android.youtube.player.YouTubePlayerView
             android:id="@+id/YoutubeView_youtubeplayer"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="6">
+            android:layout_weight="7">
 
         </com.google.android.youtube.player.YouTubePlayerView>
 
@@ -38,7 +43,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="20dp"
+        android:layout_weight="3.5">
 
         <LinearLayout
             android:id="@+id/Linearlayout_A"

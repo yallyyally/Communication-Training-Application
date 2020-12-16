@@ -53,9 +53,9 @@ public class MainActivity extends AppCompatActivity {
         final HashMap<String, String> resultMap = new HashMap();
 
 
-        alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
-        alertDialogBuilder.setTitle("인터넷 연결 실패");
-        alertDialogBuilder.setMessage("인터넷 연결 후 다시 실행해주세요");
+        alertDialogBuilder = new AlertDialog.Builder(MainActivity.this); //네트워크 연결 실패시
+        alertDialogBuilder.setTitle("네트워크 연결 실패");
+        alertDialogBuilder.setMessage("네트워크 연결 후 다시 실행해주세요");
         alertDialogBuilder.setPositiveButton("종료", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

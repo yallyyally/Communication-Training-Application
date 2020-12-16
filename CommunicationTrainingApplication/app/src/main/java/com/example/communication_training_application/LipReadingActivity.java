@@ -11,8 +11,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -68,8 +71,12 @@ public class LipReadingActivity extends YouTubeBaseActivity {
 
     Handler handler;
 
+    Spinner spinner;
+
     ArrayList examples;
     ArrayList randomNumbers;
+    ArrayList<String> spinnerArray;
+    ArrayAdapter<String> adapter;
     int size;
     int exIndex1;
     int exIndex2;
@@ -97,6 +104,7 @@ public class LipReadingActivity extends YouTubeBaseActivity {
         TextView_c = findViewById(R.id.TextView_C);
         TextView_d = findViewById(R.id.TextView_D);
 
+        spinner = (Spinner)findViewById(R.id.Question_Spinner);
 
         Button_Home = findViewById(R.id.Button_Home);
         Button_RePlay= findViewById(R.id.Button_RePlay);
@@ -117,8 +125,28 @@ public class LipReadingActivity extends YouTubeBaseActivity {
 
         //Toast.makeText(getApplicationContext(),String.valueOf(examples.get(9)),Toast.LENGTH_SHORT).show();
 
-        //세팅, 초기화
-        youTubePlayerSetup();
+        //데이터 정상적으로 받았는지 확인
+        if(!MainActivity.lipReadingData.isEmpty()){
+            spinnerArray = new ArrayList<String>();
+
+            for(int i=0;i<MainActivity.lipReadingData.size(); i++){
+                spinnerArray.add((i+1) +"번 퀴즈");
+
+            }
+            Log.d("youtube",spinnerArray.toString());
+            adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spinnerArray);
+
+            //세팅, 초기화
+            youTubePlayerSetup();
+
+        }else{
+            Toast.makeText(getApplicationContext(),"서버 문제로 데이터 다운 불가",Toast.LENGTH_LONG).show();
+
+            moveTaskToBack(true);
+            finish();
+            android.os.Process.killProcess(android.os.Process.myPid());
+        }
+
 
         //음소거
         AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
@@ -126,7 +154,23 @@ public class LipReadingActivity extends YouTubeBaseActivity {
 
         audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
 
-        //뷰 클릭 이벤트
+        //스피너
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        //스피너 이벤트
+       spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+           @Override
+           public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+               setQuestion_index(position); //퀘스쳔
+               Load_Question(position); //문제 가져오기
+           }
+
+           @Override
+           public void onNothingSelected(AdapterView<?> parent) {
+
+           }
+       });
+
 
         //홈으로 이동
         Button_Home.setOnClickListener(new View.OnClickListener() {
@@ -141,9 +185,11 @@ public class LipReadingActivity extends YouTubeBaseActivity {
             @Override
             public void onClick(View v) {
 
-                RePlay(question_index);
+                RePlay(getQuestion_index());
             }
         });
+
+
 
     }
 
@@ -158,14 +204,6 @@ public class LipReadingActivity extends YouTubeBaseActivity {
 
             }
         });
-
-        if (question_index>=MainActivity.lipReadingData.size()-1){
-            question_index=0;
-        }
-        else{
-            question_index=question_index+1; //다음 문제
-        }
-
         Log.d("retrofit",MainActivity.lipReadingData.get(question_index).toString());
 
         switch (v.getId()) { //정답 오답 비교 -> 오답일 경우 알림창
@@ -202,113 +240,15 @@ public class LipReadingActivity extends YouTubeBaseActivity {
                 }
                 break;
         }
-        //지문 가져 오기 - 중복 X 네개
-        Random random = new Random();
-        randomNumbers = new ArrayList<Integer>();
-        int num;
 
-        size = 0;
-
-        while (size < 4) {
-            num = random.nextInt(9);
-            if (size > 1) {
-                if (randomNumbers.contains(num)) {
-                    // Toast.makeText(getApplicationContext(),"있음",Toast.LENGTH_SHORT).show();
-                } else {
-                    randomNumbers.add(num);
-                    size += 1;
-                }
-            } else {
-                randomNumbers.add(num);
-                size += 1;
-            }
-
+        if (question_index>=MainActivity.lipReadingData.size()-1){
+            setQuestion_index(0);
         }
-
-        exIndex1 = (int) (randomNumbers.get(0));
-        exIndex2 = (int) (randomNumbers.get(1));
-        exIndex3 = (int) (randomNumbers.get(2));
-        exIndex4 = (int) (randomNumbers.get(3));
-        exampleA = String.valueOf(examples.get(exIndex1));
-        exampleB = String.valueOf(examples.get(exIndex2));
-        exampleC = String.valueOf(examples.get(exIndex3));
-        exampleD = String.valueOf(examples.get(exIndex4));
-
-//         Toast.makeText(getApplicationContext(),String.valueOf(exampleIndexes.get(0))+String.valueOf(exampleIndexes.get(1)),Toast.LENGTH_SHORT).show();
-
-        //답 받아옴
-        answer = MainActivity.lipReadingData.get(question_index).getAnswer();
-
-        //답이 될 네개 중 한게
-        answerIndex = random.nextInt(3);
-
-        TextView_a.setText(exampleA);
-        TextView_b.setText(exampleB);
-        TextView_c.setText(exampleC);
-        TextView_d.setText(exampleD);
-
-        switch (answerIndex) {
-            case 0:
-                TextView_a.setText(answer);
-                break;
-            case 1:
-                TextView_b.setText(answer);
-
-                break;
-            case 2:
-                TextView_c.setText(answer);
-
-                break;
-            default:
-                TextView_d.setText(answer);
-
-                break;
+        else{
+            setQuestion_index(question_index+1); //다음 문제
         }
-        //시작 시간 설정 - "00:03:00" 3분 부터 시작 가정
-        startPoint_str = MainActivity.lipReadingData.get(question_index).getStart();
-        startPoint_mili = strToMilli(startPoint_str);
-
-        //종료시간 설정, 3분 9초 종료 가정 (재생시간 5초)
-        endPoint_str = MainActivity.lipReadingData.get(question_index).getEnd();
-        endPoint_mili = strToMilli(endPoint_str);
-
-
-        //동영상 설정
-        youtubeLink = MainActivity.lipReadingData.get(question_index).getLink();
-        VIDEO_CODE = linkToCode(youtubeLink);
-
-
-        try {
-            if(mYouTubePlayer != null){
-
-                Log.d("youtube", "handler");
-                mYouTubePlayer.loadVideo(VIDEO_CODE, startPoint_mili); //1분 1초부터 시작
-
-
-                //하단바 안보이게
-                mYouTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.CHROMELESS);
-
-                handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        //For every 1 second, check the current time and endTime
-                        if (mYouTubePlayer.getCurrentTimeMillis() <= endPoint_mili) {
-                            handler.postDelayed(this, 1000);
-                        } else {
-                            handler.removeCallbacks(this); //no longer required
-                            mYouTubePlayer.pause(); //and Pause the video
-                            //and restart
-                            //mYouTubePlayer.loadVideo(VIDEO_CODE, startPoint_mili); //1분 1초부터 시작
-
-
-                        }
-                    }
-                }, 1000);
-            }
-
-        } catch (IllegalStateException e) {
-        }
+        spinner.setSelection(getQuestion_index());
+        Load_Question(getQuestion_index());
 
     }
 
@@ -326,16 +266,16 @@ public class LipReadingActivity extends YouTubeBaseActivity {
                     mYouTubePlayer = youTubePlayer;
 
                     //시작 시간 설정 - 2분 0초부터 시작한다 가정
-                    startPoint_str = MainActivity.lipReadingData.get(question_index).getStart();
+                    startPoint_str = MainActivity.lipReadingData.get(getQuestion_index()).getStart();
                     startPoint_mili = strToMilli(startPoint_str);
 
                     //종료시간 설정, 2분 7초 종료 가정 (재생시간 5초)
-                    endPoint_str = MainActivity.lipReadingData.get(question_index).getEnd();
+                    endPoint_str = MainActivity.lipReadingData.get(getQuestion_index()).getEnd();
                     endPoint_mili = strToMilli(endPoint_str);
 
 
                     //동영상 링크 서버에서 받아옴, 파싱
-                    youtubeLink = MainActivity.lipReadingData.get(question_index).getLink();
+                    youtubeLink = MainActivity.lipReadingData.get(getQuestion_index()).getLink();
                     VIDEO_CODE = linkToCode(youtubeLink);
                     try {
 
@@ -498,10 +438,122 @@ public class LipReadingActivity extends YouTubeBaseActivity {
         Log.d("youtube", "resume");
         youTubePlayerSetup();
 
-        //RePlay(question_index);
     }
 
+    private void Load_Question(Integer question_index){
 
+        Log.d("retrofit",MainActivity.lipReadingData.get(question_index).toString());
+
+
+        //지문 가져 오기 - 중복 X 네개
+        Random random = new Random();
+        randomNumbers = new ArrayList<Integer>();
+        int num;
+
+        size = 0;
+
+        while (size < 4) {
+            num = random.nextInt(9);
+            if (size > 1) {
+                if (randomNumbers.contains(num)) {
+                    // Toast.makeText(getApplicationContext(),"있음",Toast.LENGTH_SHORT).show();
+                } else {
+                    randomNumbers.add(num);
+                    size += 1;
+                }
+            } else {
+                randomNumbers.add(num);
+                size += 1;
+            }
+
+        }
+
+        exIndex1 = (int) (randomNumbers.get(0));
+        exIndex2 = (int) (randomNumbers.get(1));
+        exIndex3 = (int) (randomNumbers.get(2));
+        exIndex4 = (int) (randomNumbers.get(3));
+        exampleA = String.valueOf(examples.get(exIndex1));
+        exampleB = String.valueOf(examples.get(exIndex2));
+        exampleC = String.valueOf(examples.get(exIndex3));
+        exampleD = String.valueOf(examples.get(exIndex4));
+
+//         Toast.makeText(getApplicationContext(),String.valueOf(exampleIndexes.get(0))+String.valueOf(exampleIndexes.get(1)),Toast.LENGTH_SHORT).show();
+
+        //답 받아옴
+        answer = MainActivity.lipReadingData.get(question_index).getAnswer();
+
+        //답이 될 네개 중 한게
+        answerIndex = random.nextInt(3);
+
+        TextView_a.setText(exampleA);
+        TextView_b.setText(exampleB);
+        TextView_c.setText(exampleC);
+        TextView_d.setText(exampleD);
+
+        switch (answerIndex) {
+            case 0:
+                TextView_a.setText(answer);
+                break;
+            case 1:
+                TextView_b.setText(answer);
+
+                break;
+            case 2:
+                TextView_c.setText(answer);
+
+                break;
+            default:
+                TextView_d.setText(answer);
+
+                break;
+        }
+        //시작 시간 설정 - "00:03:00" 3분 부터 시작 가정
+        startPoint_str = MainActivity.lipReadingData.get(question_index).getStart();
+        startPoint_mili = strToMilli(startPoint_str);
+
+        //종료시간 설정, 3분 9초 종료 가정 (재생시간 5초)
+        endPoint_str = MainActivity.lipReadingData.get(question_index).getEnd();
+        endPoint_mili = strToMilli(endPoint_str);
+
+
+        //동영상 설정
+        youtubeLink = MainActivity.lipReadingData.get(question_index).getLink();
+        VIDEO_CODE = linkToCode(youtubeLink);
+
+
+        try {
+            if(mYouTubePlayer != null){
+
+                Log.d("youtube", "handler");
+                mYouTubePlayer.loadVideo(VIDEO_CODE, startPoint_mili); //1분 1초부터 시작
+
+
+                //하단바 안보이게
+                mYouTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.CHROMELESS);
+
+                handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        //For every 1 second, check the current time and endTime
+                        if (mYouTubePlayer.getCurrentTimeMillis() <= endPoint_mili) {
+                            handler.postDelayed(this, 1000);
+                        } else {
+                            handler.removeCallbacks(this); //no longer required
+                            mYouTubePlayer.pause(); //and Pause the video
+                            //and restart
+                            //mYouTubePlayer.loadVideo(VIDEO_CODE, startPoint_mili); //1분 1초부터 시작
+
+
+                        }
+                    }
+                }, 1000);
+            }
+
+        } catch (IllegalStateException e) {
+        }
+
+    }
 
     public void RePlay(Integer question_index){
 
@@ -541,6 +593,14 @@ public class LipReadingActivity extends YouTubeBaseActivity {
             }
         }, 1000);
 
+    }
+
+    public int getQuestion_index() {
+        return question_index;
+    }
+
+    public void setQuestion_index(int question_index) {
+        this.question_index = question_index;
     }
 
     @Override
