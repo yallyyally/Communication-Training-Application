@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Button;
+import java.util.ArrayList;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -68,6 +69,7 @@ public class LipReadingActivity extends YouTubeBaseActivity {
 
     Handler handler;
 
+    ArrayList examples;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -89,6 +91,22 @@ public class LipReadingActivity extends YouTubeBaseActivity {
 
         Button_watchAnswer = findViewById(R.id.Button_WatchAnswer);
         Button_Home = findViewById(R.id.Button_Home);
+
+        //예시 지문
+        examples = new ArrayList<String>();
+        examples.add("그렇게 할 거야");
+        examples.add("제 자세와 이런 것들을");
+        examples.add("요청을 할 계획입니다.");
+        examples.add("장래희망이 아니에요");
+        examples.add("밥은 먹었는지 안먹었는지");
+        examples.add("조금만 더 버려졌었다면");
+        examples.add("바로 끝까지 올라갈 수 있는지");
+        examples.add("도대체 왜");
+        examples.add("강사를 직접 마주하면서");
+        examples.add("내가 할 수 있는 일인가");
+
+
+        //Toast.makeText(getApplicationContext(),String.valueOf(examples.get(9)),Toast.LENGTH_SHORT).show();
 
         //세팅, 초기화
         youTubePlayerSetup();
