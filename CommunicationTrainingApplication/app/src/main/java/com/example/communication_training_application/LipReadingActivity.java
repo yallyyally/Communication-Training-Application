@@ -2,6 +2,7 @@
 package com.example.communication_training_application;
 
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -38,7 +39,7 @@ public class LipReadingActivity extends YouTubeBaseActivity {
     //https://www.youtube.com/watch?v=2jdNqxerUao
     private String youtubeLink;
     private String VIDEO_CODE; //동영상 링크: v=다음 거로 파싱해야 함.
-    private final String API_KEY = "apikey";
+    private final String API_KEY = "AIzaSyDInG8IWFJkwZKuJ_A1iMxUJ-N4Xm7xbRw";
 
     private String startPoint_str; //시작지점(문자열)
     private int startPoint_mili; //시작 지점(밀리초)
@@ -84,6 +85,8 @@ public class LipReadingActivity extends YouTubeBaseActivity {
     int exIndex3;
     int exIndex4;
 
+
+;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -378,6 +381,17 @@ public class LipReadingActivity extends YouTubeBaseActivity {
 
             @Override
             public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+                final int REQUEST_CODE = 1;
+
+                if(youTubeInitializationResult.isUserRecoverableError()) {
+
+                    AlertDialog myAlertDialog =  (AlertDialog) youTubeInitializationResult.getErrorDialog(LipReadingActivity.this,REQUEST_CODE);
+                    myAlertDialog.show();
+
+                } else {
+                    String errorMessage = String.format("There was an error initializing the YoutubePlayer (%1$s)", youTubeInitializationResult.toString());
+                    Toast.makeText(getParent(), errorMessage, Toast.LENGTH_LONG).show();
+                }
 
             }
 
