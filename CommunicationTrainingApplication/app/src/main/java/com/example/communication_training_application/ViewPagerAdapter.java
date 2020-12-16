@@ -1,11 +1,13 @@
 package com.example.communication_training_application;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,7 +25,14 @@ public class ViewPagerAdapter extends PagerAdapter {
     private int cnt_data = 1;
     //private int cPosition = 0;
 
+    public Context context;
+
     private ArrayList<UiseongUitaeData> ulist = new ArrayList<>();
+
+    public int[] list_color={
+            Color.rgb(111,212,237), Color.rgb(234,236,198)
+//            R.color.colorPrimaryLight, R.color.colorSecondary
+    };
 
     public ViewPagerAdapter() {
 
@@ -41,14 +50,27 @@ public class ViewPagerAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
+
+        LinearLayout linearLayout = ((WordMeaningActivity)WordMeaningActivity.context).ll;
+
+        linearLayout.setBackgroundColor(list_color[position % 2]);
         View view = null ;
         //position = cPosition;
+        LayoutInflater inflater1 = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        //View view2 = inflater1.inflate(R.layout.activity_word_meaning, container, false);
 
+        //context = (WordMeaningActivity)WordMeaningActivity.context;
+
+        //LinearLayout linearLayout = (LinearLayout)view2.findViewById(R.id.ll_word);
+        Log.d("컬러11111111","는"+list_color[position % 2]);
+        Log.d("컬러22222222","는"+list_color[0]);
+        Log.d("컬러33333333","는"+list_color[1]);
 
         if (mContext != null) {
             // LayoutInflater를 통해 "/res/layout/page.xml"을 뷰로 생성.
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.page, container, false);
+
 
             String str = ulist.get(position).getAnswer();
             TextView tvWord = (TextView) view.findViewById(R.id.tv_word) ;

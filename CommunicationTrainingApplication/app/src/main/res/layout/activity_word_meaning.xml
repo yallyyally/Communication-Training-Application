@@ -2,14 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/transparent">
+    android:background="@android:color/transparent"
+    android:id="@+id/ll_word">
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="30dp"
-        android:layout_marginVertical="50dp"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginVertical="25dp"
+        android:background="@drawable/round_white_shadow_bg"
         />
 
 </LinearLayout>
