@@ -1,5 +1,6 @@
 package com.example.communication_training_application;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -48,6 +50,11 @@ public class DictionaryActivity extends AppCompatActivity implements TextWatcher
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dictionary);
+
+        LinearLayout ll = (LinearLayout)findViewById(R.id.ll_dictionary);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE|View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+
+        ll.setPadding(0, statusBarHeight(this), 0, 0);
 
         ImageView ivHome = (ImageView) findViewById(R.id.iv_home);
         ivHome.setOnClickListener(new ImageView.OnClickListener(){
@@ -147,5 +154,10 @@ public class DictionaryActivity extends AppCompatActivity implements TextWatcher
     @Override
     public void afterTextChanged(Editable editable) {
 
+    }
+    public int statusBarHeight(Context context){
+        int result = 0;
+        int resourceId = getResources().getIdentifier("status_bar_height","dimen","android");
+        if (resourceId > 0) { result = getResources().getDimensionPixelSize(resourceId); } return result;
     }
 }

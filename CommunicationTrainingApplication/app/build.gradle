@@ -50,5 +50,8 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
     compileOnly 'com.google.android.wearable:wearable:2.6.0'
 
+    //ViewPager UI
+    implementation 'com.ToxicBakery.viewpager.transforms:view-pager-transforms:2.0.24'
+
 
 }
