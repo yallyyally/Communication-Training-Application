@@ -2,33 +2,27 @@
 package com.example.communication_training_application;
 
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Button;
-
-import java.util.ArrayList;
-import java.util.Random;
-
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 public class LipReadingActivity extends YouTubeBaseActivity {
 
@@ -36,7 +30,6 @@ public class LipReadingActivity extends YouTubeBaseActivity {
     private YouTubePlayer.OnInitializedListener mOnInitializedListener;
     private YouTubePlayer mYouTubePlayer;
 
-    //https://www.youtube.com/watch?v=2jdNqxerUao
     private String youtubeLink; //서버에서 받아오는 변수
 
     private String VIDEO_CODE; //동영상 링크: youtubeLink에서 파싱(v=다음 거)
@@ -71,6 +64,7 @@ public class LipReadingActivity extends YouTubeBaseActivity {
 
     //홈 이동 버튼
     Button Button_Home;
+    Button Button_RePlay;
 
     Handler handler;
 
@@ -82,8 +76,8 @@ public class LipReadingActivity extends YouTubeBaseActivity {
     int exIndex3;
     int exIndex4;
 
+    int question_index = 0;
 
-    ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +99,7 @@ public class LipReadingActivity extends YouTubeBaseActivity {
 
 
         Button_Home = findViewById(R.id.Button_Home);
+        Button_RePlay= findViewById(R.id.Button_RePlay);
 
         //예시 지문
         examples = new ArrayList<String>();
@@ -142,6 +137,13 @@ public class LipReadingActivity extends YouTubeBaseActivity {
             }
         });
 
+        Button_RePlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                RePlay(question_index);
+            }
+        });
 
     }
 
@@ -157,6 +159,14 @@ public class LipReadingActivity extends YouTubeBaseActivity {
             }
         });
 
+        if (question_index>=MainActivity.lipReadingData.size()-1){
+            question_index=0;
+        }
+        else{
+            question_index=question_index+1; //다음 문제
+        }
+
+        Log.d("retrofit",MainActivity.lipReadingData.get(question_index).toString());
 
         switch (v.getId()) { //정답 오답 비교 -> 오답일 경우 알림창
             case R.id.Linearlayout_A:
@@ -227,7 +237,7 @@ public class LipReadingActivity extends YouTubeBaseActivity {
 //         Toast.makeText(getApplicationContext(),String.valueOf(exampleIndexes.get(0))+String.valueOf(exampleIndexes.get(1)),Toast.LENGTH_SHORT).show();
 
         //답 받아옴
-        answer = "흐름을 방해하진 않는지";
+        answer = MainActivity.lipReadingData.get(question_index).getAnswer();
 
         //답이 될 네개 중 한게
         answerIndex = random.nextInt(3);
@@ -255,42 +265,53 @@ public class LipReadingActivity extends YouTubeBaseActivity {
                 break;
         }
         //시작 시간 설정 - "00:03:00" 3분 부터 시작 가정
-        startPoint_str = "00:02:45";
+        startPoint_str = MainActivity.lipReadingData.get(question_index).getStart();
         startPoint_mili = strToMilli(startPoint_str);
 
         //종료시간 설정, 3분 9초 종료 가정 (재생시간 5초)
-        endPoint_str = "00:02:50";
+        endPoint_str = MainActivity.lipReadingData.get(question_index).getEnd();
         endPoint_mili = strToMilli(endPoint_str);
 
 
         //동영상 설정
-        youtubeLink = "https://www.youtube.com/watch?v=5LbFdY6vGsQ";
+        youtubeLink = MainActivity.lipReadingData.get(question_index).getLink();
         VIDEO_CODE = linkToCode(youtubeLink);
 
-        mYouTubePlayer.loadVideo(VIDEO_CODE, startPoint_mili); //1분 1초부터 시작
+
+        try {
+            if(mYouTubePlayer != null){
+
+                Log.d("youtube", "handler");
+                mYouTubePlayer.loadVideo(VIDEO_CODE, startPoint_mili); //1분 1초부터 시작
 
 
-        //하단바 안보이게
-        mYouTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.CHROMELESS);
+                //하단바 안보이게
+                mYouTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.CHROMELESS);
 
-        handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                //For every 1 second, check the current time and endTime
-                if (mYouTubePlayer.getCurrentTimeMillis() <= endPoint_mili) {
-                    handler.postDelayed(this, 1000);
-                } else {
-                    handler.removeCallbacks(this); //no longer required
-                    mYouTubePlayer.pause(); //and Pause the video
-                    //and restart
-                    //mYouTubePlayer.loadVideo(VIDEO_CODE, startPoint_mili); //1분 1초부터 시작
+                handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        //For every 1 second, check the current time and endTime
+                        if (mYouTubePlayer.getCurrentTimeMillis() <= endPoint_mili) {
+                            handler.postDelayed(this, 1000);
+                        } else {
+                            handler.removeCallbacks(this); //no longer required
+                            mYouTubePlayer.pause(); //and Pause the video
+                            //and restart
+                            //mYouTubePlayer.loadVideo(VIDEO_CODE, startPoint_mili); //1분 1초부터 시작
 
 
-                }
+                        }
+                    }
+                }, 1000);
             }
-        }, 1000);
+
+        } catch (IllegalStateException e) {
+        }
+
     }
+
 
     private void youTubePlayerSetup() {
 
@@ -305,42 +326,51 @@ public class LipReadingActivity extends YouTubeBaseActivity {
                     mYouTubePlayer = youTubePlayer;
 
                     //시작 시간 설정 - 2분 0초부터 시작한다 가정
-                    startPoint_str = "00:02:00";
+                    startPoint_str = MainActivity.lipReadingData.get(question_index).getStart();
                     startPoint_mili = strToMilli(startPoint_str);
 
                     //종료시간 설정, 2분 7초 종료 가정 (재생시간 5초)
-                    endPoint_str = "00:02:07";
+                    endPoint_str = MainActivity.lipReadingData.get(question_index).getEnd();
                     endPoint_mili = strToMilli(endPoint_str);
 
 
                     //동영상 링크 서버에서 받아옴, 파싱
-                    youtubeLink = "https://www.youtube.com/watch?v=2jdNqxerUao";
+                    youtubeLink = MainActivity.lipReadingData.get(question_index).getLink();
                     VIDEO_CODE = linkToCode(youtubeLink);
+                    try {
 
-                    mYouTubePlayer.loadVideo(VIDEO_CODE, startPoint_mili); //1분 30초부터 시작
+                            mYouTubePlayer.loadVideo(VIDEO_CODE, startPoint_mili); //1분 30초부터 시작
 
+                            Log.d("youtube", "이니셜중");
 
-                    //하단바 안보이게
-                    mYouTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.CHROMELESS);
+                            //하단바 안보이게
+                            mYouTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.CHROMELESS);
 
-                    //일정시간만큼 재생
-                    handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            //For every 1 second, check the current time and endTime
-                            if (mYouTubePlayer.getCurrentTimeMillis() <= endPoint_mili) {
-                                handler.postDelayed(this, 1000);
-                            } else {
-                                handler.removeCallbacks(this); //no longer required
-                                mYouTubePlayer.pause(); //and Pause the video
-                                //and restart
-                                //mYouTubePlayer.loadVideo(VIDEO_CODE, startPoint_mili); //1분 1초부터 시작
+                            //일정시간만큼 재생
+                            handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
 
+                                    if(mYouTubePlayer != null){
+                                        Log.d("youtube", "run");
+                                        //For every 1 second, check the current time and endTime
+                                        if (mYouTubePlayer.getCurrentTimeMillis() <= endPoint_mili) {
+                                            handler.postDelayed(this, 1000);
+                                        } else {
+                                            handler.removeCallbacks(this); //no longer required
+                                            mYouTubePlayer.pause(); //and Pause the video
+                                            //and restart
+                                            //mYouTubePlayer.loadVideo(VIDEO_CODE, startPoint_mili); //1분 1초부터 시작
+                                        }
 
-                            }
+                                    }
+                                }
+                            }, 1000);
                         }
-                    }, 1000);
+                     catch (IllegalStateException e) {
+                    }
+
 
 
                 }
@@ -401,7 +431,7 @@ public class LipReadingActivity extends YouTubeBaseActivity {
 //         Toast.makeText(getApplicationContext(),String.valueOf(exampleIndexes.get(0))+String.valueOf(exampleIndexes.get(1)),Toast.LENGTH_SHORT).show();
 
         //답 받아옴
-        answer = "살이 좀 빠졌습니다";
+        answer = MainActivity.lipReadingData.get(question_index).getAnswer();
 
         //답이 될 네개 중 한게
         answerIndex = random.nextInt(3);
@@ -461,4 +491,66 @@ public class LipReadingActivity extends YouTubeBaseActivity {
     }
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        Log.d("youtube", "resume");
+        youTubePlayerSetup();
+
+        //RePlay(question_index);
+    }
+
+
+
+    public void RePlay(Integer question_index){
+
+        startPoint_str = MainActivity.lipReadingData.get(question_index).getStart();
+        startPoint_mili = strToMilli(startPoint_str);
+
+        //종료시간 설정, 3분 9초 종료 가정 (재생시간 5초)
+        endPoint_str = MainActivity.lipReadingData.get(question_index).getEnd();
+        endPoint_mili = strToMilli(endPoint_str);
+
+
+        //동영상 설정
+        youtubeLink = MainActivity.lipReadingData.get(question_index).getLink();
+        VIDEO_CODE = linkToCode(youtubeLink);
+
+        mYouTubePlayer.loadVideo(VIDEO_CODE, startPoint_mili); //1분 1초부터 시작
+
+
+        //하단바 안보이게
+        mYouTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.CHROMELESS);
+
+        handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //For every 1 second, check the current time and endTime
+                if (mYouTubePlayer.getCurrentTimeMillis() <= endPoint_mili) {
+                    handler.postDelayed(this, 1000);
+                } else {
+                    handler.removeCallbacks(this); //no longer required
+                    mYouTubePlayer.pause(); //and Pause the video
+                    //and restart
+                    //mYouTubePlayer.loadVideo(VIDEO_CODE, startPoint_mili); //1분 1초부터 시작
+
+
+                }
+            }
+        }, 1000);
+
+    }
+
+    @Override
+    public void onDestroy() {
+
+        handler.removeMessages(0);
+        if (mYouTubePlayer != null) {
+            Log.d("youtube", "destroy중");
+            mYouTubePlayer.release();
+        }
+        super.onDestroy();
+    }
 }
