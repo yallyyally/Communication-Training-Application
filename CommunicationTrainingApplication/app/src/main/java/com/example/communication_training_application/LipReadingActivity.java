@@ -1,12 +1,16 @@
+
 package com.example.communication_training_application;
 
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -73,7 +77,6 @@ public class LipReadingActivity extends YouTubeBaseActivity {
     Handler handler;
 
     ArrayList examples;
-    ArrayList ZeroToNine;
     ArrayList randomNumbers;
     int size;
     int exIndex1;
@@ -122,7 +125,11 @@ public class LipReadingActivity extends YouTubeBaseActivity {
         //세팅, 초기화
         youTubePlayerSetup();
 
+        //음소거
+        AudioManager audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+        int currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
 
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,0, AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
         //뷰 클릭 이벤트
         //정답 보기
         Button_watchAnswer.setOnClickListener(new View.OnClickListener() {
@@ -209,13 +216,9 @@ public class LipReadingActivity extends YouTubeBaseActivity {
         }
         //지문 가져 오기 - 중복 X 네개
         Random random = new Random();
-        ZeroToNine = new ArrayList<Integer>();
         randomNumbers = new ArrayList<Integer>();
         int num;
-        for (int i = 0;i<10;i++)
-        {
-            ZeroToNine.add(0);
-        }
+
         size = 0;
 
         while (size < 4)
@@ -345,9 +348,12 @@ public class LipReadingActivity extends YouTubeBaseActivity {
 
                     mYouTubePlayer.loadVideo(VIDEO_CODE, startPoint_mili); //1분 30초부터 시작
 
+                    //음소거
+
                     //하단바 안보이게
                     mYouTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.CHROMELESS);
 
+                    //일정시간만큼 재생
                     handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         @Override
@@ -365,6 +371,8 @@ public class LipReadingActivity extends YouTubeBaseActivity {
                             }
                         }
                     }, 1000);
+
+
                 }
             }
 
@@ -372,18 +380,16 @@ public class LipReadingActivity extends YouTubeBaseActivity {
             public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
 
             }
+
+
         };
 
 
         //지문 가져 오기 - 중복 X 네개
         Random random = new Random();
-        ZeroToNine = new ArrayList<Integer>();
         randomNumbers = new ArrayList<Integer>();
         int num;
-        for (int i = 0;i<10;i++)
-        {
-            ZeroToNine.add(0);
-        }
+
         size = 0;
 
         while (size < 4)
@@ -453,32 +459,8 @@ public class LipReadingActivity extends YouTubeBaseActivity {
         mYouTubePlayerView.initialize(API_KEY, mOnInitializedListener);
 
     }
-/*
-    public ArrayList<Integer> makeExampleIndexes() {
-        int size;
-        size = 0;
-        int n;
-        //0~9 사이의 범위 숫자 네개, 중복 허용 X
-        ArrayList<Integer> ans = new ArrayList<>();
-        ArrayList<Integer> ZeroToNine = new ArrayList<>(10);
-        for (int i = 0; i < 10; i++)
-            ZeroToNine.set(i, 0);
 
-        while (size < 4) {
 
-            n = (int) Math.random() % 10;
-
-            if (ZeroToNine.get(n) == 0) {
-                ans.add(n);
-                size += 1;
-                ZeroToNine.set(n, 1);
-            }
-
-        }
-
-        return ans;
-    }
-*/
     public int strToMilli(String time) {
         //time == "00:02:00"
         String hour = time.split(":")[0];
