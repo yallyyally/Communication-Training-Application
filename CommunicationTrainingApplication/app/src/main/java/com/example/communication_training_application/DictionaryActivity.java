@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -98,7 +99,8 @@ public class DictionaryActivity extends AppCompatActivity implements TextWatcher
         @Override
         public void onFailure(Call<ArrayList<UiseongUitaeData>> call, Throwable t) {
             //CommonAlert.toastMsg(cbTAG + "레트로핏 콜백 요청 실패(2) " + t, mContext);
-            Log.e(TAG, cbTAG + "레트로핏 콜백 요청 실패(2) " + t);
+            Toast.makeText(getApplicationContext(),"서버 문제로 데이터 다운 불가",Toast.LENGTH_LONG);
+
         }
     };
 
