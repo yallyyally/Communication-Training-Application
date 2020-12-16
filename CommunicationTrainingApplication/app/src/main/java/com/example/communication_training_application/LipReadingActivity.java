@@ -13,7 +13,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Button;
+
 import java.util.ArrayList;
+import java.util.Random;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,6 +44,7 @@ public class LipReadingActivity extends YouTubeBaseActivity {
     private int endPoint_mili; //종료 지점(밀리초)
 
     private int runningTime; // 지속 시간(영상 길이, 밀리초)
+    private int answerIndex; //답이 될 보기
 
     //보기 4개(버튼)
     LinearLayout LinearLayout_a;
@@ -70,6 +73,14 @@ public class LipReadingActivity extends YouTubeBaseActivity {
     Handler handler;
 
     ArrayList examples;
+    ArrayList ZeroToNine;
+    ArrayList randomNumbers;
+    int size;
+    int exIndex1;
+    int exIndex2;
+    int exIndex3;
+    int exIndex4;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -150,11 +161,10 @@ public class LipReadingActivity extends YouTubeBaseActivity {
     }
 
 
-    public void clickHandler(View v)
-    {
+    public void clickHandler(View v) {
         AlertDialog.Builder incorrect = new AlertDialog.Builder(LipReadingActivity.this);
         incorrect.setTitle("오답입니다!");
-        incorrect.setMessage("정답은 "+answer+" 입니다");
+        incorrect.setMessage("정답은 " + answer + " 입니다");
         // 버튼 추가 (Ok 버튼과 Cancle 버튼 )
         incorrect.setPositiveButton("다음 문제 풀기", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
@@ -163,73 +173,119 @@ public class LipReadingActivity extends YouTubeBaseActivity {
         });
 
 
-
-        switch(v.getId())
-        { //정답 오답 비교 -> 오답일 경우 알림창
+        switch (v.getId()) { //정답 오답 비교 -> 오답일 경우 알림창
             case R.id.Linearlayout_A:
-                if (answer.equals(exampleA))
-                {
+                if (answerIndex == 0) {
                     Toast.makeText(getApplicationContext(), "정답입니다!", Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
+                } else {
                     Toast.makeText(getApplicationContext(), "오답입니다!", Toast.LENGTH_SHORT).show();
                     incorrect.show();
                 }
                 break;
             case R.id.Linearlayout_B:
-                if (answer.equals(exampleB))
-                {
+                if (answerIndex == 1) {
                     Toast.makeText(getApplicationContext(), "정답입니다!", Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
+                } else {
                     Toast.makeText(getApplicationContext(), "오답입니다!", Toast.LENGTH_SHORT).show();
                     incorrect.show();
                 }
                 break;
             case R.id.Linearlayout_C:
-                if (answer.equals(exampleC))
-                {
+                if (answerIndex == 2) {
                     Toast.makeText(getApplicationContext(), "정답입니다!", Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
+                } else {
                     Toast.makeText(getApplicationContext(), "오답입니다!", Toast.LENGTH_SHORT).show();
                     incorrect.show();
                 }
                 break;
             case R.id.Linearlayout_D:
-                if (answer.equals(exampleD))
-                {
+                if (answerIndex == 3) {
                     Toast.makeText(getApplicationContext(), "정답입니다!", Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
+                } else {
                     Toast.makeText(getApplicationContext(), "오답입니다!", Toast.LENGTH_SHORT).show();
                     incorrect.show();
                 }
                 break;
         }
-        //예문 변경 - 서버에서 받아오기
-        exampleA = "제발";
-        exampleB = "바뀌었으면";
-        exampleC = "좋겠다";
-        exampleD = "하..졸려";
-        answer="하..졸려";
+        //지문 가져 오기 - 중복 X 네개
+        Random random = new Random();
+        ZeroToNine = new ArrayList<Integer>();
+        randomNumbers = new ArrayList<Integer>();
+        int num;
+        for (int i = 0;i<10;i++)
+        {
+            ZeroToNine.add(0);
+        }
+        size = 0;
+
+        while (size < 4)
+        {
+            num  = random.nextInt(9);
+            if (size > 1)
+            {
+                if (randomNumbers.contains(num))
+                {
+                   // Toast.makeText(getApplicationContext(),"있음",Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    randomNumbers.add(num);
+                    size+=1;
+                }
+            }
+            else
+            {
+                randomNumbers.add(num);
+                size+=1;
+            }
+
+        }
+
+        exIndex1 = (int) (randomNumbers.get(0));
+        exIndex2 = (int) (randomNumbers.get(1));
+        exIndex3 = (int) (randomNumbers.get(2));
+        exIndex4 =(int) (randomNumbers.get(3));
+        exampleA = String.valueOf(examples.get(exIndex1));
+        exampleB = String.valueOf(examples.get(exIndex2));
+        exampleC = String.valueOf(examples.get(exIndex3));
+        exampleD = String.valueOf(examples.get(exIndex4));
+
+//         Toast.makeText(getApplicationContext(),String.valueOf(exampleIndexes.get(0))+String.valueOf(exampleIndexes.get(1)),Toast.LENGTH_SHORT).show();
+
+        //답 받아옴
+        answer = "흐름을 방해하진 않는지";
+
+        //답이 될 네개 중 한게
+        answerIndex = random.nextInt(3);
 
         TextView_a.setText(exampleA);
         TextView_b.setText(exampleB);
         TextView_c.setText(exampleC);
         TextView_d.setText(exampleD);
 
+        switch (answerIndex) {
+            case 0:
+                TextView_a.setText(answer);
+                break;
+            case 1:
+                TextView_b.setText(answer);
 
+                break;
+            case 2:
+                TextView_c.setText(answer);
+
+                break;
+            default:
+                TextView_d.setText(answer);
+
+                break;
+        }
         //시작 시간 설정 - "00:03:00" 3분 부터 시작 가정
         startPoint_str = "00:02:45";
         startPoint_mili = strToMilli(startPoint_str);
 
         //종료시간 설정, 3분 9초 종료 가정 (재생시간 5초)
-        endPoint_str="00:02:50";
+        endPoint_str = "00:02:50";
         endPoint_mili = strToMilli(endPoint_str);
 
 
@@ -261,6 +317,7 @@ public class LipReadingActivity extends YouTubeBaseActivity {
             }
         }, 1000);
     }
+
     private void youTubePlayerSetup() {
 
         mYouTubePlayerView = (YouTubePlayerView) findViewById(R.id.YoutubeView_youtubeplayer);
@@ -275,7 +332,7 @@ public class LipReadingActivity extends YouTubeBaseActivity {
 
                     //시작 시간 설정 - 2분 0초부터 시작한다 가정
                     startPoint_str = "00:02:00";
-                    startPoint_mili =strToMilli(startPoint_str);
+                    startPoint_mili = strToMilli(startPoint_str);
 
                     //종료시간 설정, 2분 7초 종료 가정 (재생시간 5초)
                     endPoint_str = "00:02:07";
@@ -291,7 +348,7 @@ public class LipReadingActivity extends YouTubeBaseActivity {
                     //하단바 안보이게
                     mYouTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.CHROMELESS);
 
-                     handler = new Handler();
+                    handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -318,25 +375,111 @@ public class LipReadingActivity extends YouTubeBaseActivity {
         };
 
 
-        //서버로부터 지문 받아옴
-        exampleA = "아니요 뚱인데요";
-        exampleB = "아니요 스폰지밥";
-        exampleC = "아니요 징징이";
-        exampleD = "아니요 집게사장";
+        //지문 가져 오기 - 중복 X 네개
+        Random random = new Random();
+        ZeroToNine = new ArrayList<Integer>();
+        randomNumbers = new ArrayList<Integer>();
+        int num;
+        for (int i = 0;i<10;i++)
+        {
+            ZeroToNine.add(0);
+        }
+        size = 0;
+
+        while (size < 4)
+        {
+            num  = random.nextInt(9);
+            if (size > 1)
+            {
+                if (randomNumbers.contains(num))
+                {
+                    // Toast.makeText(getApplicationContext(),"있음",Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    randomNumbers.add(num);
+                    size+=1;
+                }
+            }
+            else
+            {
+                randomNumbers.add(num);
+                size+=1;
+            }
+
+        }
+
+        exIndex1 = (int) (randomNumbers.get(0));
+        exIndex2 = (int) (randomNumbers.get(1));
+        exIndex3 = (int) (randomNumbers.get(2));
+        exIndex4 =(int) (randomNumbers.get(3));
+        exampleA = String.valueOf(examples.get(exIndex1));
+        exampleB = String.valueOf(examples.get(exIndex2));
+        exampleC = String.valueOf(examples.get(exIndex3));
+        exampleD = String.valueOf(examples.get(exIndex4));
+
+//         Toast.makeText(getApplicationContext(),String.valueOf(exampleIndexes.get(0))+String.valueOf(exampleIndexes.get(1)),Toast.LENGTH_SHORT).show();
 
         //답 받아옴
-        answer = "아니요 뚱인데요";
+        answer = "살이 좀 빠졌습니다";
+
+        //답이 될 네개 중 한게
+        answerIndex = random.nextInt(3);
+
         TextView_a.setText(exampleA);
         TextView_b.setText(exampleB);
         TextView_c.setText(exampleC);
         TextView_d.setText(exampleD);
 
+        switch (answerIndex) {
+            case 0:
+                TextView_a.setText(answer);
+                break;
+            case 1:
+                TextView_b.setText(answer);
+
+                break;
+            case 2:
+                TextView_c.setText(answer);
+
+                break;
+            default:
+                TextView_d.setText(answer);
+
+                break;
+        }
+
 
         mYouTubePlayerView.initialize(API_KEY, mOnInitializedListener);
 
     }
+/*
+    public ArrayList<Integer> makeExampleIndexes() {
+        int size;
+        size = 0;
+        int n;
+        //0~9 사이의 범위 숫자 네개, 중복 허용 X
+        ArrayList<Integer> ans = new ArrayList<>();
+        ArrayList<Integer> ZeroToNine = new ArrayList<>(10);
+        for (int i = 0; i < 10; i++)
+            ZeroToNine.set(i, 0);
 
-    public int strToMilli(String time){
+        while (size < 4) {
+
+            n = (int) Math.random() % 10;
+
+            if (ZeroToNine.get(n) == 0) {
+                ans.add(n);
+                size += 1;
+                ZeroToNine.set(n, 1);
+            }
+
+        }
+
+        return ans;
+    }
+*/
+    public int strToMilli(String time) {
         //time == "00:02:00"
         String hour = time.split(":")[0];
         String minute = time.split(":")[1];
@@ -346,7 +489,7 @@ public class LipReadingActivity extends YouTubeBaseActivity {
         int minuteInt = Integer.parseInt(minute);
         int secondInt = Integer.parseInt(second);
 
-        return ( secondInt + minuteInt*60 + hourInt * 3600) * 1000;
+        return (secondInt + minuteInt * 60 + hourInt * 3600) * 1000;
 
     }
 
