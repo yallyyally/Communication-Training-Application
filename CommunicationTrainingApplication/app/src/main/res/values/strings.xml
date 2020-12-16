@@ -7,17 +7,14 @@
     <string name="skip">SKIP</string>
     <string name="start">GOT IT</string>
 
-    <string name="slide_1_title">Hello Food!</string>
-    <string name="slide_1_desc">The easiest way to order food from your favourite restaurant!</string>
+    <string name="slide_1_title">입모양 읽기</string>
+    <string name="slide_1_desc">영상에서 말하는 사람의 입모양을 읽습니다</string>
 
-    <string name="slide_2_title">Movie Tickets</string>
-    <string name="slide_2_desc">Book movie tickets for your family and friends!</string>
+    <string name="slide_2_title">선택하기</string>
+    <string name="slide_2_desc">화자가 말한 문장을 고릅니다 \n 답을 선택하면 정답 여부를 확인할 수 있고 다음 퀴즈로 넘어갑니다</string>
 
-    <string name="slide_3_title">Great Discounts</string>
-    <string name="slide_3_desc">Best discounts on every single service we offer!</string>
-
-    <string name="slide_4_title">World Travel</string>
-    <string name="slide_4_desc">Book tickets of any transportation and travel the world!</string>
+    <string name="slide_3_title">다양한 영상</string>
+    <string name="slide_3_desc">상단의 메뉴를 클릭해서 다양한 영상을 반복 학습해보세요</string>
 
     <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
     <string name="play_again">Play Again</string>
