@@ -37,18 +37,18 @@ public class LipReadingActivity extends YouTubeBaseActivity {
     private YouTubePlayer mYouTubePlayer;
 
     //https://www.youtube.com/watch?v=2jdNqxerUao
-    private String youtubeLink;
-    private String VIDEO_CODE; //동영상 링크: v=다음 거로 파싱해야 함.
+    private String youtubeLink; //서버에서 받아오는 변수
+
+    private String VIDEO_CODE; //동영상 링크: youtubeLink에서 파싱(v=다음 거)
     private final String API_KEY = "AIzaSyDInG8IWFJkwZKuJ_A1iMxUJ-N4Xm7xbRw";
 
-    private String startPoint_str; //시작지점(문자열)
+    private String startPoint_str; //시작지점(문자열) - 서버에서 받아오는 변수
     private int startPoint_mili; //시작 지점(밀리초)
 
 
-    private String endPoint_str; //종료지점(문자열)
+    private String endPoint_str; //종료지점(문자열) - 서버에서 받아오는 변수
     private int endPoint_mili; //종료 지점(밀리초)
 
-    private int runningTime; // 지속 시간(영상 길이, 밀리초)
     private int answerIndex; //답이 될 보기
 
     //보기 4개(버튼)
@@ -67,10 +67,7 @@ public class LipReadingActivity extends YouTubeBaseActivity {
     TextView TextView_d;
     String exampleD;
 
-    String answer;//정답
-
-    //정답 보기 버튼
-    Button Button_watchAnswer;
+    String answer; //정답받아오는 곳 - 서버에서 받아오는 변수
 
     //홈 이동 버튼
     Button Button_Home;
@@ -86,7 +83,8 @@ public class LipReadingActivity extends YouTubeBaseActivity {
     int exIndex4;
 
 
-;
+    ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -106,7 +104,6 @@ public class LipReadingActivity extends YouTubeBaseActivity {
         TextView_d = findViewById(R.id.TextView_D);
 
 
-        Button_watchAnswer = findViewById(R.id.Button_WatchAnswer);
         Button_Home = findViewById(R.id.Button_Home);
 
         //예시 지문
@@ -129,35 +126,13 @@ public class LipReadingActivity extends YouTubeBaseActivity {
         youTubePlayerSetup();
 
         //음소거
-        AudioManager audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+        AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         int currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
 
-        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,0, AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
+
         //뷰 클릭 이벤트
-        //정답 보기
-        Button_watchAnswer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //정답 보기 버튼
-                AlertDialog.Builder myAlertBuilder = new AlertDialog.Builder(LipReadingActivity.this);
 
-                // alert의 title과 Messege 세팅
-                myAlertBuilder.setTitle("정답 보기");
-                myAlertBuilder.setMessage(answer);
-
-                // 버튼 추가
-                myAlertBuilder.setPositiveButton("문제로 이동", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // OK 버튼을 눌렸을 경우
-
-                    }
-                });
-
-                // Alert를 생성해주고 보여주는 메소드(show를 선언해야 Alert가 생성됨)
-                myAlertBuilder.show();
-
-            }
-        });
         //홈으로 이동
         Button_Home.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -170,7 +145,7 @@ public class LipReadingActivity extends YouTubeBaseActivity {
 
     }
 
-
+    //보기(지문) 클릭 핸들러
     public void clickHandler(View v) {
         AlertDialog.Builder incorrect = new AlertDialog.Builder(LipReadingActivity.this);
         incorrect.setTitle("오답입니다!");
@@ -224,25 +199,18 @@ public class LipReadingActivity extends YouTubeBaseActivity {
 
         size = 0;
 
-        while (size < 4)
-        {
-            num  = random.nextInt(9);
-            if (size > 1)
-            {
-                if (randomNumbers.contains(num))
-                {
-                   // Toast.makeText(getApplicationContext(),"있음",Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
+        while (size < 4) {
+            num = random.nextInt(9);
+            if (size > 1) {
+                if (randomNumbers.contains(num)) {
+                    // Toast.makeText(getApplicationContext(),"있음",Toast.LENGTH_SHORT).show();
+                } else {
                     randomNumbers.add(num);
-                    size+=1;
+                    size += 1;
                 }
-            }
-            else
-            {
+            } else {
                 randomNumbers.add(num);
-                size+=1;
+                size += 1;
             }
 
         }
@@ -250,7 +218,7 @@ public class LipReadingActivity extends YouTubeBaseActivity {
         exIndex1 = (int) (randomNumbers.get(0));
         exIndex2 = (int) (randomNumbers.get(1));
         exIndex3 = (int) (randomNumbers.get(2));
-        exIndex4 =(int) (randomNumbers.get(3));
+        exIndex4 = (int) (randomNumbers.get(3));
         exampleA = String.valueOf(examples.get(exIndex1));
         exampleB = String.valueOf(examples.get(exIndex2));
         exampleC = String.valueOf(examples.get(exIndex3));
@@ -351,7 +319,6 @@ public class LipReadingActivity extends YouTubeBaseActivity {
 
                     mYouTubePlayer.loadVideo(VIDEO_CODE, startPoint_mili); //1분 30초부터 시작
 
-                    //음소거
 
                     //하단바 안보이게
                     mYouTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.CHROMELESS);
@@ -383,9 +350,9 @@ public class LipReadingActivity extends YouTubeBaseActivity {
             public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
                 final int REQUEST_CODE = 1;
 
-                if(youTubeInitializationResult.isUserRecoverableError()) {
+                if (youTubeInitializationResult.isUserRecoverableError()) {
 
-                    AlertDialog myAlertDialog =  (AlertDialog) youTubeInitializationResult.getErrorDialog(LipReadingActivity.this,REQUEST_CODE);
+                    AlertDialog myAlertDialog = (AlertDialog) youTubeInitializationResult.getErrorDialog(LipReadingActivity.this, REQUEST_CODE);
                     myAlertDialog.show();
 
                 } else {
@@ -406,25 +373,18 @@ public class LipReadingActivity extends YouTubeBaseActivity {
 
         size = 0;
 
-        while (size < 4)
-        {
-            num  = random.nextInt(9);
-            if (size > 1)
-            {
-                if (randomNumbers.contains(num))
-                {
+        while (size < 4) {
+            num = random.nextInt(9);
+            if (size > 1) {
+                if (randomNumbers.contains(num)) {
                     // Toast.makeText(getApplicationContext(),"있음",Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
+                } else {
                     randomNumbers.add(num);
-                    size+=1;
+                    size += 1;
                 }
-            }
-            else
-            {
+            } else {
                 randomNumbers.add(num);
-                size+=1;
+                size += 1;
             }
 
         }
@@ -432,7 +392,7 @@ public class LipReadingActivity extends YouTubeBaseActivity {
         exIndex1 = (int) (randomNumbers.get(0));
         exIndex2 = (int) (randomNumbers.get(1));
         exIndex3 = (int) (randomNumbers.get(2));
-        exIndex4 =(int) (randomNumbers.get(3));
+        exIndex4 = (int) (randomNumbers.get(3));
         exampleA = String.valueOf(examples.get(exIndex1));
         exampleB = String.valueOf(examples.get(exIndex2));
         exampleC = String.valueOf(examples.get(exIndex3));
