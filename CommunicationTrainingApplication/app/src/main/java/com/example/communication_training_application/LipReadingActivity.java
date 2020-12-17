@@ -404,7 +404,7 @@ public class LipReadingActivity extends YouTubeBaseActivity {
         size = 0;
 
         while (size < 4) {
-            num = random.nextInt(9);
+            num = random.nextInt(examples.size()-2);
             if (size > 1) {
                 if (randomNumbers.contains(num)) {
                     // Toast.makeText(getApplicationContext(),"있음",Toast.LENGTH_SHORT).show();
@@ -513,7 +513,7 @@ public class LipReadingActivity extends YouTubeBaseActivity {
         size = 0;
 
         while (size < 4) {
-            num = random.nextInt(9);
+            num = random.nextInt(examples.size()-2);
             if (size > 1) {
                 if (randomNumbers.contains(num)) {
                     // Toast.makeText(getApplicationContext(),"있음",Toast.LENGTH_SHORT).show();
