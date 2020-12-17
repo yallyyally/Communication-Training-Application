@@ -95,8 +95,8 @@ public class LipReadingActivity extends YouTubeBaseActivity {
 
     //드로어블
     //Drawable dWhite = getDrawable(R.drawable.round_white_shadow_btn);
-    Drawable dCorrect = getDrawable(R.drawable.round_white_shadow_btn);
-    Drawable dWrong = getDrawable(R.drawable.round_white_shadow_btn);
+    private Drawable dCorrect;
+    private Drawable dWrong;
 
 
     @Override
@@ -104,6 +104,7 @@ public class LipReadingActivity extends YouTubeBaseActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lip_reading);
+
 
         answer = "울라불라불루짱"; //에러 방지
         //뷰 잇기
@@ -139,6 +140,11 @@ public class LipReadingActivity extends YouTubeBaseActivity {
         examples.add("도대체 왜");
         examples.add("강사를 직접 마주하면서");
         examples.add("내가 할 수 있는 일인가");
+
+        LinearLayout ll = (LinearLayout)findViewById(R.id.ll_lip_reading);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE|View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+
+        ll.setPadding(0, statusBarHeight(this), 0, 0);
 
 
         //Toast.makeText(getApplicationContext(),String.valueOf(examples.get(9)),Toast.LENGTH_SHORT).show();
@@ -224,51 +230,55 @@ public class LipReadingActivity extends YouTubeBaseActivity {
         });
         Log.d("retrofit",MainActivity.lipReadingData.get(question_index).toString());
 
+
+        //dCorrect = getDrawable(R.drawable.round_white_shadow_btn);
+        //dWrong = getDrawable(R.drawable.round_white_shadow_btn);
+
         switch (v.getId()) { //정답 오답 비교 -> 오답일 경우 알림창
             case R.id.Linearlayout_A:
-                btnA.setTextColor(getColor(R.color.white));
-                TextView_a.setTextColor(getColor(R.color.white));
+                //btnA.setTextColor(getColor(R.color.white));
+                //TextView_a.setTextColor(getColor(R.color.white));
                 if (answerIndex == 0) {
-                    LinearLayout_a.setBackground(dCorrect);
+                    //LinearLayout_a.setBackground(dCorrect);
                     Toast.makeText(getApplicationContext(), "정답입니다!", Toast.LENGTH_SHORT).show();
                 } else {
-                    LinearLayout_a.setBackground(dWrong);
+                    //LinearLayout_a.setBackground(dWrong);
                     Toast.makeText(getApplicationContext(), "오답입니다!", Toast.LENGTH_SHORT).show();
                     incorrect.show();
                 }
                 break;
             case R.id.Linearlayout_B:
-                btnB.setTextColor(getColor(R.color.white));
-                TextView_b.setTextColor(getColor(R.color.white));
+                //btnB.setTextColor(getColor(R.color.white));
+                //TextView_b.setTextColor(getColor(R.color.white));
                 if (answerIndex == 1) {
-                    LinearLayout_b.setBackground(dCorrect);
+                    //LinearLayout_b.setBackground(dCorrect);
                     Toast.makeText(getApplicationContext(), "정답입니다!", Toast.LENGTH_SHORT).show();
                 } else {
-                    LinearLayout_b.setBackground(dWrong);
+                    //LinearLayout_b.setBackground(dWrong);
                     Toast.makeText(getApplicationContext(), "오답입니다!", Toast.LENGTH_SHORT).show();
                     incorrect.show();
                 }
                 break;
             case R.id.Linearlayout_C:
-                btnC.setTextColor(getColor(R.color.white));
-                TextView_c.setTextColor(getColor(R.color.white));
+                //btnC.setTextColor(getColor(R.color.white));
+                //TextView_c.setTextColor(getColor(R.color.white));
                 if (answerIndex == 2) {
-                    LinearLayout_c.setBackground(dCorrect);
+                    //LinearLayout_c.setBackground(dCorrect);
                     Toast.makeText(getApplicationContext(), "정답입니다!", Toast.LENGTH_SHORT).show();
                 } else {
-                    LinearLayout_c.setBackground(dWrong);
+                    //LinearLayout_c.setBackground(dWrong);
                     Toast.makeText(getApplicationContext(), "오답입니다!", Toast.LENGTH_SHORT).show();
                     incorrect.show();
                 }
                 break;
             case R.id.Linearlayout_D:
-                btnD.setTextColor(getColor(R.color.white));
-                TextView_d.setTextColor(getColor(R.color.white));
+                //btnD.setTextColor(getColor(R.color.white));
+                //TextView_d.setTextColor(getColor(R.color.white));
                 if (answerIndex == 3) {
-                    LinearLayout_d.setBackground(dCorrect);
+                    //LinearLayout_d.setBackground(dCorrect);
                     Toast.makeText(getApplicationContext(), "정답입니다!", Toast.LENGTH_SHORT).show();
                 } else {
-                    LinearLayout_d.setBackground(dWrong);
+                    //LinearLayout_d.setBackground(dWrong);
                     Toast.makeText(getApplicationContext(), "오답입니다!", Toast.LENGTH_SHORT).show();
                     incorrect.show();
                 }
@@ -646,5 +656,10 @@ public class LipReadingActivity extends YouTubeBaseActivity {
             mYouTubePlayer.release();
         }
         super.onDestroy();
+    }
+    public int statusBarHeight(Context context){
+        int result = 0;
+        int resourceId = getResources().getIdentifier("status_bar_height","dimen","android");
+        if (resourceId > 0) { result = getResources().getDimensionPixelSize(resourceId); } return result;
     }
 }

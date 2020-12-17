@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/gradient_side_background"
     android:weightSum="20"
+    android:id="@+id/ll_lip_reading"
 >
 
     <LinearLayout
@@ -26,7 +27,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="독화 학습"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
             android:layout_weight="9"
