@@ -140,6 +140,22 @@ public class LipReadingActivity extends YouTubeBaseActivity {
         examples.add("도대체 왜");
         examples.add("강사를 직접 마주하면서");
         examples.add("내가 할 수 있는 일인가");
+        examples.add("참기름을 조금 넣는다.");
+        examples.add("반드시 보호자분이");
+        examples.add("매듭으로 연결하세요");
+        examples.add("도와주셔서 고마워요");
+        examples.add("의견을 제공하려고");
+        examples.add("과거의 멋진 순간들이");
+        examples.add("무엇을 하겠다고");
+        examples.add("자연스럽게");
+        examples.add("완료했습니다");
+        examples.add("많을수록 쓰기 편하게");
+        examples.add("꼼꼼하게 고친");
+        examples.add("커피를 좋아하는");
+        examples.add("다시 봤어요.");
+        examples.add("수시로 변경되지만");
+        examples.add("의미가 있는지");
+        examples.add("귀신같이 짚어내는");
 
         LinearLayout ll = (LinearLayout)findViewById(R.id.ll_lip_reading);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE|View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
