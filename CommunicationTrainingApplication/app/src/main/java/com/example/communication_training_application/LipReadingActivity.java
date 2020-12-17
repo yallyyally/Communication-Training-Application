@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -53,6 +55,12 @@ public class LipReadingActivity extends YouTubeBaseActivity {
     LinearLayout LinearLayout_c;
     LinearLayout LinearLayout_d;
 
+    //a,b,c,d 버튼
+    Button btnA;
+    Button btnB;
+    Button btnC;
+    Button btnD;
+
     //지문 4개
     TextView TextView_a;
     String exampleA;
@@ -66,7 +74,7 @@ public class LipReadingActivity extends YouTubeBaseActivity {
     String answer; //정답받아오는 곳 - 서버에서 받아오는 변수
 
     //홈 이동 버튼
-    Button Button_Home;
+    ImageView Button_Home;
     Button Button_RePlay;
 
     Handler handler;
@@ -85,12 +93,17 @@ public class LipReadingActivity extends YouTubeBaseActivity {
 
     int question_index = 0;
 
+    //드로어블
+    //Drawable dWhite = getDrawable(R.drawable.round_white_shadow_btn);
+    Drawable dCorrect = getDrawable(R.drawable.round_white_shadow_btn);
+    Drawable dWrong = getDrawable(R.drawable.round_white_shadow_btn);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dialog_lip_reading_sentence);
+        setContentView(R.layout.activity_lip_reading);
 
         answer = "울라불라불루짱"; //에러 방지
         //뷰 잇기
@@ -98,6 +111,11 @@ public class LipReadingActivity extends YouTubeBaseActivity {
         LinearLayout_b = findViewById(R.id.Linearlayout_B);
         LinearLayout_c = findViewById(R.id.Linearlayout_C);
         LinearLayout_d = findViewById(R.id.Linearlayout_D);
+
+        btnA = findViewById(R.id.btn_a);
+        btnB = findViewById(R.id.btn_b);
+        btnC = findViewById(R.id.btn_c);
+        btnD = findViewById(R.id.btn_d);
 
         TextView_a = findViewById(R.id.TextView_A);
         TextView_b = findViewById(R.id.TextView_B);
@@ -208,33 +226,49 @@ public class LipReadingActivity extends YouTubeBaseActivity {
 
         switch (v.getId()) { //정답 오답 비교 -> 오답일 경우 알림창
             case R.id.Linearlayout_A:
+                btnA.setTextColor(getColor(R.color.white));
+                TextView_a.setTextColor(getColor(R.color.white));
                 if (answerIndex == 0) {
+                    LinearLayout_a.setBackground(dCorrect);
                     Toast.makeText(getApplicationContext(), "정답입니다!", Toast.LENGTH_SHORT).show();
                 } else {
+                    LinearLayout_a.setBackground(dWrong);
                     Toast.makeText(getApplicationContext(), "오답입니다!", Toast.LENGTH_SHORT).show();
                     incorrect.show();
                 }
                 break;
             case R.id.Linearlayout_B:
+                btnB.setTextColor(getColor(R.color.white));
+                TextView_b.setTextColor(getColor(R.color.white));
                 if (answerIndex == 1) {
+                    LinearLayout_b.setBackground(dCorrect);
                     Toast.makeText(getApplicationContext(), "정답입니다!", Toast.LENGTH_SHORT).show();
                 } else {
+                    LinearLayout_b.setBackground(dWrong);
                     Toast.makeText(getApplicationContext(), "오답입니다!", Toast.LENGTH_SHORT).show();
                     incorrect.show();
                 }
                 break;
             case R.id.Linearlayout_C:
+                btnC.setTextColor(getColor(R.color.white));
+                TextView_c.setTextColor(getColor(R.color.white));
                 if (answerIndex == 2) {
+                    LinearLayout_c.setBackground(dCorrect);
                     Toast.makeText(getApplicationContext(), "정답입니다!", Toast.LENGTH_SHORT).show();
                 } else {
+                    LinearLayout_c.setBackground(dWrong);
                     Toast.makeText(getApplicationContext(), "오답입니다!", Toast.LENGTH_SHORT).show();
                     incorrect.show();
                 }
                 break;
             case R.id.Linearlayout_D:
+                btnD.setTextColor(getColor(R.color.white));
+                TextView_d.setTextColor(getColor(R.color.white));
                 if (answerIndex == 3) {
+                    LinearLayout_d.setBackground(dCorrect);
                     Toast.makeText(getApplicationContext(), "정답입니다!", Toast.LENGTH_SHORT).show();
                 } else {
+                    LinearLayout_d.setBackground(dWrong);
                     Toast.makeText(getApplicationContext(), "오답입니다!", Toast.LENGTH_SHORT).show();
                     incorrect.show();
                 }

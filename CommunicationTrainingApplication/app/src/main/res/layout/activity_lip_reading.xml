@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_side_background"
+    android:weightSum="20"
+>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_weight="2"
+        android:padding="15dp"
+        android:weightSum="10"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/Button_Home"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_home_24"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="독화 학습"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_weight="9"
+            android:textAlignment="textEnd"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="18"
+        android:weightSum="18"
+        android:orientation="vertical"
+        android:background="@drawable/top_round_white_shadow_bg"
+        android:paddingTop="20dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2">
+
+            <Spinner
+                android:id="@+id/Question_Spinner"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="20dp"
+                android:background="@drawable/shadow"/>
+
+            <ImageView
+                android:id="@+id/iv_drop_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignRight="@id/Question_Spinner"
+                android:layout_marginHorizontal="20dp"
+                android:src="@drawable/ic_baseline_arrow_drop_down_24"/>
+
+        </RelativeLayout>
+
+        <com.google.android.youtube.player.YouTubePlayerView
+            android:id="@+id/YoutubeView_youtubeplayer"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="7">
+
+        </com.google.android.youtube.player.YouTubePlayerView>
+
+        <Button
+            android:id="@+id/Button_RePlay"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="0.8"
+            android:minHeight="0dp"
+            android:layout_margin="10dp"
+            android:text="다시 재생"
+            android:visibility="visible"
+            android:layout_gravity="right"
+            android:background="@drawable/round_light_gray_btn"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:layout_weight="8"
+            android:paddingHorizontal="5dp">
+
+            <LinearLayout
+                android:id="@+id/Linearlayout_A"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+
+                android:layout_weight="1.5"
+                android:clickable="true"
+                android:onClick="clickHandler"
+                android:orientation="horizontal"
+                android:weightSum="10"
+                android:background="@drawable/round_white_shadow_btn"
+                android:paddingHorizontal="10dp">
+
+                <Button
+                    android:id="@+id/btn_a"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:text="a"
+                    android:layout_marginLeft="5dp"/>
+
+                <TextView
+                    android:id="@+id/TextView_A"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_weight="9"
+                    android:text="hello," />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/Linearlayout_B"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1.5"
+                android:clickable="true"
+                android:onClick="clickHandler"
+                android:orientation="horizontal"
+                android:weightSum="10"
+                android:background="@drawable/round_white_shadow_btn"
+                android:paddingHorizontal="10dp">
+
+                <Button
+                    android:id="@+id/btn_b"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:text="b"
+                    android:layout_marginLeft="5dp"/>
+
+                <TextView
+                    android:id="@+id/TextView_B"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_weight="9"
+                    android:text="hello," />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/Linearlayout_C"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1.5"
+
+                android:clickable="true"
+                android:onClick="clickHandler"
+                android:orientation="horizontal"
+                android:weightSum="10"
+                android:background="@drawable/round_white_shadow_btn"
+                android:paddingHorizontal="10dp">
+
+                <Button
+                    android:id="@+id/btn_c"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:text="c"
+                    android:layout_marginLeft="5dp"/>
+
+                <TextView
+                    android:id="@+id/TextView_C"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_weight="9"
+                    android:text="hello," />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/Linearlayout_D"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1.5"
+
+                android:clickable="true"
+                android:onClick="clickHandler"
+                android:orientation="horizontal"
+
+                android:weightSum="10"
+                android:background="@drawable/round_white_shadow_btn"
+                android:paddingHorizontal="10dp">
+
+                <Button
+                    android:id="@+id/btn_d"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:text="d"
+                    android:layout_marginLeft="5dp"/>
+
+                <TextView
+                    android:id="@+id/TextView_D"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_weight="9"
+                    android:text="hello," />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>
