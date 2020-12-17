@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
             if (response.isSuccessful()) {
                 lipReadingData = response.body();
                 Log.d(TAG, cbTAG + " 콜백 : " + lipReadingData.get(0).toString());
-                Toast.makeText(getApplicationContext(), "데이터 다운 성공", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "데이터 다운 성공", Toast.LENGTH_SHORT).show();
 
             } else {
                 //CommonAlert.toastMsg(cbTAG + "레트로핏 콜백 요청 실패(1) ", mContext);
