@@ -27,9 +27,9 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="의성어ㆍ의태어 사전"
+            android:text="의성어/의태어 사전"
             android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textSize="28sp"
             android:textStyle="bold"
             android:layout_weight="9"
             android:textAlignment="textEnd"/>
@@ -49,41 +49,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="3"
             android:layout_margin="15sp">
             <TextView
                 android:id="@+id/tv_all"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:layout_weight="1"
-                android:text="전체"
-                android:textSize="15sp"
+                android:text="낱말 목록"
+                android:textSize="20sp"
                 android:textColor="@color/black"
-                android:background="@android:color/transparent"
-                android:gravity="center"/>
-
-            <TextView
-                android:id="@+id/tv_uiseong"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:layout_weight="1"
-                android:text="의성어"
-                android:textSize="15sp"
-                android:textColor="@color/lightgray"
-                android:background="@android:color/transparent"
-                android:gravity="center"/>
-
-            <TextView
-                android:id="@+id/tv_uitae"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:layout_weight="1"
-                android:text="의태어"
-                android:textSize="15sp"
-                android:textColor="@color/lightgray"
+                android:textStyle="bold"
                 android:background="@android:color/transparent"
                 android:gravity="center"/>
 
@@ -109,7 +85,7 @@
                 android:layout_height="wrap_content"
                 android:paddingVertical="25dp"
                 android:paddingHorizontal="30dp"
-                android:textSize="15sp"
+                android:textSize="16sp"
                 android:background="@drawable/shadow"
                 android:hint="단어 검색"
                 android:singleLine="true"

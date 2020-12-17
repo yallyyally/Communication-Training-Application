@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:text="독화 학습"
             android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textSize="28sp"
             android:textStyle="bold"
             android:layout_weight="9"
             android:textAlignment="textEnd"/>
