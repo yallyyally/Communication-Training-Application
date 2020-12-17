@@ -50,7 +50,7 @@ public class WordMeaningActivity extends AppCompatActivity {
         viewPager.setCurrentItem(position);
         viewPager.setPageTransformer(true, new RotateDownTransformer());
 
-        Toast toast = Toast.makeText(this.getApplicationContext(),"좌우로 스와이프하여 단어를 학습해 보세요.", Toast.LENGTH_LONG);
+        Toast toast = Toast.makeText(this.getApplicationContext(),"좌우로 스와이프하여 단어를 학습해 보세요.", Toast.LENGTH_SHORT);
         toast.show();
 
 

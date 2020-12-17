@@ -62,9 +62,9 @@ public class ViewPagerAdapter extends PagerAdapter {
         //context = (WordMeaningActivity)WordMeaningActivity.context;
 
         //LinearLayout linearLayout = (LinearLayout)view2.findViewById(R.id.ll_word);
-        Log.d("컬러11111111","는"+list_color[position % 2]);
-        Log.d("컬러22222222","는"+list_color[0]);
-        Log.d("컬러33333333","는"+list_color[1]);
+        //Log.d("컬러11111111","는"+list_color[position % 2]);
+        //Log.d("컬러22222222","는"+list_color[0]);
+        //Log.d("컬러33333333","는"+list_color[1]);
 
         if (mContext != null) {
             // LayoutInflater를 통해 "/res/layout/page.xml"을 뷰로 생성.
